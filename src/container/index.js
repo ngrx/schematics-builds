@@ -80,12 +80,14 @@ function default_1(options) {
         options.selector = options.selector || buildSelector(options);
         options.path = options.path ? core_1.normalize(options.path) : options.path;
         options.module = find_module_1.findModuleFromOptions(host, options);
-        var statePath = "/" + options.sourceDir + "/" + options.path + "/" + options.state;
         var componentPath = "/" + options.sourceDir + "/" + options.path + "/" +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             stringUtils.dasherize(options.name) +
             '.component';
-        options.state = find_module_1.buildRelativePath(componentPath, statePath);
+        if (options.state) {
+            var statePath = "/" + options.sourceDir + "/" + options.path + "/" + options.state;
+            options.state = find_module_1.buildRelativePath(componentPath, statePath);
+        }
         var templateSource = schematics_1.apply(schematics_1.url('./files'), [
             options.spec ? schematics_1.noop() : schematics_1.filter(function (path) { return !path.endsWith('__spec.ts'); }),
             options.inlineStyle
