@@ -8,97 +8,85 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
-require("rxjs/add/operator/merge");
 var ts = require("typescript");
 var stringUtils = require("../strings");
-var ast_utils_1 = require("../utility/ast-utils");
-var change_1 = require("../utility/change");
 var find_module_1 = require("../utility/find-module");
-function addDeclarationToNgModule(options) {
+var change_1 = require("../utility/change");
+var route_utils_1 = require("../utility/route-utils");
+var ngrx_utils_1 = require("../utility/ngrx-utils");
+function addStateToComponent(options) {
     return function (host) {
-        if (options.skipImport || !options.module) {
+        if (!options.state && !options.stateInterface) {
             return host;
         }
-        var modulePath = options.module;
-        var text = host.read(modulePath);
-        if (text === null) {
-            throw new schematics_1.SchematicsException("File " + modulePath + " does not exist.");
+        var statePath = "/" + options.sourceDir + "/" + options.path + "/" + options.state;
+        if (options.state) {
+            if (!host.exists(statePath)) {
+                throw new Error('Specified state path does not exist');
+            }
         }
-        var sourceText = text.toString('utf-8');
-        var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
         var componentPath = "/" + options.sourceDir + "/" + options.path + "/" +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             stringUtils.dasherize(options.name) +
-            '.component';
-        var relativePath = find_module_1.buildRelativePath(modulePath, componentPath);
-        var classifiedName = stringUtils.classify(options.name + "Component");
-        var declarationChanges = ast_utils_1.addDeclarationToModule(source, modulePath, classifiedName, relativePath);
-        var declarationRecorder = host.beginUpdate(modulePath);
-        for (var _i = 0, declarationChanges_1 = declarationChanges; _i < declarationChanges_1.length; _i++) {
-            var change = declarationChanges_1[_i];
+            '.component.ts';
+        var text = host.read(componentPath);
+        if (text === null) {
+            throw new schematics_1.SchematicsException("File " + componentPath + " does not exist.");
+        }
+        var sourceText = text.toString('utf-8');
+        var source = ts.createSourceFile(componentPath, sourceText, ts.ScriptTarget.Latest, true);
+        var stateImportPath = find_module_1.buildRelativePath(componentPath, statePath);
+        var stateImport = options.state
+            ? route_utils_1.insertImport(source, componentPath, "* as fromStore", stateImportPath, true)
+            : new change_1.NoopChange();
+        var componentClass = source.statements.find(function (stm) { return stm.kind === ts.SyntaxKind.ClassDeclaration; });
+        var component = componentClass;
+        var componentConstructor = component.members.find(function (member) { return member.kind === ts.SyntaxKind.Constructor; });
+        var cmpCtr = componentConstructor;
+        var pos = cmpCtr.pos;
+        var stateType = options.state
+            ? "fromStore." + options.stateInterface
+            : 'any';
+        var constructorText = cmpCtr.getText();
+        var _a = constructorText.split('()'), start = _a[0], end = _a[1];
+        var storeText = "private store: Store<" + stateType + ">";
+        var storeConstructor = [start, "(" + storeText + ")", end].join('');
+        var constructorUpdate = new change_1.ReplaceChange(componentPath, pos, "  " + constructorText, "\n\n  " + storeConstructor);
+        var changes = [stateImport, constructorUpdate];
+        var recorder = host.beginUpdate(componentPath);
+        for (var _i = 0, changes_1 = changes; _i < changes_1.length; _i++) {
+            var change = changes_1[_i];
             if (change instanceof change_1.InsertChange) {
-                declarationRecorder.insertLeft(change.pos, change.toAdd);
+                recorder.insertLeft(change.pos, change.toAdd);
+            }
+            else if (change instanceof change_1.ReplaceChange) {
+                recorder.remove(pos, change.oldText.length);
+                recorder.insertLeft(change.order, change.newText);
             }
         }
-        host.commitUpdate(declarationRecorder);
-        if (options.export) {
-            // Need to refresh the AST because we overwrote the file in the host.
-            var text_1 = host.read(modulePath);
-            if (text_1 === null) {
-                throw new schematics_1.SchematicsException("File " + modulePath + " does not exist.");
-            }
-            var sourceText_1 = text_1.toString('utf-8');
-            var source_1 = ts.createSourceFile(modulePath, sourceText_1, ts.ScriptTarget.Latest, true);
-            var exportRecorder = host.beginUpdate(modulePath);
-            var exportChanges = ast_utils_1.addExportToModule(source_1, modulePath, stringUtils.classify(options.name + "Component"), relativePath);
-            for (var _a = 0, exportChanges_1 = exportChanges; _a < exportChanges_1.length; _a++) {
-                var change = exportChanges_1[_a];
-                if (change instanceof change_1.InsertChange) {
-                    exportRecorder.insertLeft(change.pos, change.toAdd);
-                }
-            }
-            host.commitUpdate(exportRecorder);
-        }
+        host.commitUpdate(recorder);
         return host;
     };
 }
-function buildSelector(options) {
-    var selector = stringUtils.dasherize(options.name);
-    if (options.prefix) {
-        selector = options.prefix + "-" + selector;
-    }
-    return selector;
-}
 function default_1(options) {
-    var sourceDir = options.sourceDir;
-    if (!sourceDir) {
-        throw new schematics_1.SchematicsException("sourceDir option is required.");
-    }
     return function (host, context) {
-        options.selector = options.selector || buildSelector(options);
-        options.path = options.path ? core_1.normalize(options.path) : options.path;
-        options.module = find_module_1.findModuleFromOptions(host, options);
-        var componentPath = "/" + options.sourceDir + "/" + options.path + "/" +
-            (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
-            stringUtils.dasherize(options.name) +
-            '.component';
-        if (options.state) {
-            var statePath = "/" + options.sourceDir + "/" + options.path + "/" + options.state;
-            options.state = find_module_1.buildRelativePath(componentPath, statePath);
+        var sourceDir = options.sourceDir;
+        if (!sourceDir) {
+            throw new schematics_1.SchematicsException("sourceDir option is required.");
         }
+        var opts = ['state', 'stateInterface'].reduce(function (current, key) {
+            return ngrx_utils_1.omit(current, key);
+        }, options);
         var templateSource = schematics_1.apply(schematics_1.url('./files'), [
             options.spec ? schematics_1.noop() : schematics_1.filter(function (path) { return !path.endsWith('__spec.ts'); }),
-            options.inlineStyle
-                ? schematics_1.filter(function (path) { return !path.endsWith('.__styleext__'); })
-                : schematics_1.noop(),
-            options.inlineTemplate ? schematics_1.filter(function (path) { return !path.endsWith('.html'); }) : schematics_1.noop(),
-            schematics_1.template(__assign({}, stringUtils, { 'if-flat': function (s) { return (options.flat ? '' : s); } }, options, { dot: function () { return '.'; } })),
+            schematics_1.template(__assign({ 'if-flat': function (s) { return (options.flat ? '' : s); } }, stringUtils, options, { dot: function () { return '.'; } })),
             schematics_1.move(sourceDir),
         ]);
         return schematics_1.chain([
-            schematics_1.branchAndMerge(schematics_1.chain([addDeclarationToNgModule(options), schematics_1.mergeWith(templateSource)])),
+            schematics_1.externalSchematic('@schematics/angular', 'component', __assign({}, opts, { spec: false })),
+            addStateToComponent(options),
+            schematics_1.mergeWith(templateSource),
         ])(host, context);
     };
 }

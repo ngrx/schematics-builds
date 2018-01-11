@@ -19,3 +19,6 @@ export declare function addReducerToActionReducerMap(source: ts.SourceFile, redu
  * Add reducer feature to NgModule
  */
 export declare function addReducerImportToNgModule(options: ReducerOptions): Rule;
+export declare function omit<T extends {
+    [key: string]: any;
+}>(object: T, keyToRemove: keyof T): Partial<T>;

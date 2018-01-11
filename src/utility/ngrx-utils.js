@@ -170,4 +170,13 @@ function addReducerImportToNgModule(options) {
     };
 }
 exports.addReducerImportToNgModule = addReducerImportToNgModule;
+function omit(object, keyToRemove) {
+    return Object.keys(object)
+        .filter(function (key) { return key !== keyToRemove; })
+        .reduce(function (result, key) {
+        return Object.assign(result, (_a = {}, _a[key] = object[key], _a));
+        var _a;
+    }, {});
+}
+exports.omit = omit;
 //# sourceMappingURL=ngrx-utils.js.map

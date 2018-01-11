@@ -57,8 +57,8 @@ export declare class RemoveChange implements Change {
 export declare class ReplaceChange implements Change {
     path: string;
     private pos;
-    private oldText;
-    private newText;
+    oldText: string;
+    newText: string;
     order: number;
     description: string;
     constructor(path: string, pos: number, oldText: string, newText: string);

@@ -30,7 +30,10 @@ function default_1(options) {
             schematics_1.move(sourceDir),
         ]);
         return schematics_1.chain([
-            ngrx_utils_1.addReducerToState(options),
+            schematics_1.branchAndMerge(schematics_1.chain([
+                schematics_1.filter(function (path) { return !path.includes('node_modules'); }),
+                ngrx_utils_1.addReducerToState(options),
+            ])),
             schematics_1.branchAndMerge(schematics_1.chain([
                 schematics_1.filter(function (path) {
                     return path.endsWith('.module.ts') &&
