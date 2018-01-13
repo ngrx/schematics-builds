@@ -277,7 +277,10 @@ function _addSymbolToNgModuleMetadata(source, ngModulePath, metadataField, symbo
             return [];
         }
         var effectsModule = nodeArray.find(function (node) {
-            return node.getText().includes('EffectsModule');
+            return (node.getText().includes('EffectsModule.forRoot') &&
+                symbolName.includes('EffectsModule.forRoot')) ||
+                (node.getText().includes('EffectsModule.forFeature') &&
+                    symbolName.includes('EffectsModule.forFeature'));
         });
         if (effectsModule && symbolName.includes('EffectsModule')) {
             var effectsArgs = effectsModule.arguments.shift();
