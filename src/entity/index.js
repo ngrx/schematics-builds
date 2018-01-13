@@ -29,8 +29,8 @@ function default_1(options) {
             schematics_1.move(sourceDir),
         ]);
         return schematics_1.chain([
-            ngrx_utils_1.addReducerToState(__assign({}, options, { flat: true })),
-            ngrx_utils_1.addReducerImportToNgModule(__assign({}, options, { flat: true })),
+            ngrx_utils_1.addReducerToState(__assign({}, options)),
+            ngrx_utils_1.addReducerImportToNgModule(__assign({}, options)),
             schematics_1.branchAndMerge(schematics_1.chain([schematics_1.mergeWith(templateSource)])),
         ])(host, context);
     };
