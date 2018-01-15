@@ -5,6 +5,7 @@ function default_1(options) {
     return function (host, context) {
         return schematics_1.chain([
             schematics_1.schematic('action', {
+                flat: options.flat,
                 name: options.name,
                 path: options.path,
                 sourceDir: options.sourceDir,

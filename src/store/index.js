@@ -37,10 +37,12 @@ function addImportToNgModule(options) {
         var environmentsPath = find_module_1.buildRelativePath(statePath, "/" + options.sourceDir + "/environments/environment");
         var storeNgModuleImport = ast_utils_1.addImportToModule(source, modulePath, options.root
             ? "StoreModule.forRoot(reducers, { metaReducers })"
-            : "StoreModule.forFeature('" + stringUtils.camelize(options.name) + "', reducers, { metaReducers })", relativePath).shift();
+            : "StoreModule.forFeature('" + stringUtils.camelize(options.name) + "', from" + stringUtils.classify(options.name) + ".reducers, { metaReducers: from" + stringUtils.classify(options.name) + ".metaReducers })", relativePath).shift();
         var commonImports = [
             route_utils_1.insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
-            route_utils_1.insertImport(source, modulePath, 'reducers, metaReducers', relativePath),
+            options.root
+                ? route_utils_1.insertImport(source, modulePath, 'reducers, metaReducers', relativePath)
+                : route_utils_1.insertImport(source, modulePath, "* as from" + stringUtils.classify(options.name), relativePath, true),
             storeNgModuleImport,
         ];
         var rootImports = [];
