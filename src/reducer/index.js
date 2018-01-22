@@ -26,7 +26,9 @@ function default_1(options) {
         }
         var templateSource = schematics_1.apply(schematics_1.url('./files'), [
             options.spec ? schematics_1.noop() : schematics_1.filter(function (path) { return !path.endsWith('__spec.ts'); }),
-            schematics_1.template(__assign({}, stringUtils, { 'if-flat': function (s) { return (options.flat ? '' : s); } }, options, { dot: function () { return '.'; } })),
+            schematics_1.template(__assign({}, stringUtils, { 'if-flat': function (s) {
+                    return stringUtils.group(options.flat ? '' : s, options.group ? 'reducers' : '');
+                } }, options, { dot: function () { return '.'; } })),
             schematics_1.move(sourceDir),
         ]);
         return schematics_1.chain([

@@ -35,6 +35,7 @@ function addImportToNgModule(options) {
         var effectsName = "" + stringUtils.classify(options.name + "Effects");
         var effectsModuleImport = route_utils_1.insertImport(source, modulePath, 'EffectsModule', '@ngrx/effects');
         var effectsPath = "/" + options.sourceDir + "/" + options.path + "/" +
+            (options.group ? 'effects/' : '') +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             stringUtils.dasherize(options.name) +
             '.effects';
@@ -67,7 +68,9 @@ function default_1(options) {
         }
         var templateSource = schematics_1.apply(schematics_1.url('./files'), [
             options.spec ? schematics_1.noop() : schematics_1.filter(function (path) { return !path.endsWith('__spec.ts'); }),
-            schematics_1.template(__assign({}, stringUtils, { 'if-flat': function (s) { return (options.flat ? '' : s); } }, options, { dot: function () { return '.'; } })),
+            schematics_1.template(__assign({}, stringUtils, { 'if-flat': function (s) {
+                    return stringUtils.group(options.flat ? '' : s, options.group ? 'effects' : '');
+                } }, options, { dot: function () { return '.'; } })),
             schematics_1.move(sourceDir),
         ]);
         return schematics_1.chain([

@@ -6,6 +6,7 @@ function default_1(options) {
         return schematics_1.chain([
             schematics_1.schematic('action', {
                 flat: options.flat,
+                group: options.group,
                 name: options.name,
                 path: options.path,
                 sourceDir: options.sourceDir,
@@ -13,6 +14,7 @@ function default_1(options) {
             }),
             schematics_1.schematic('reducer', {
                 flat: options.flat,
+                group: options.group,
                 module: options.module,
                 name: options.name,
                 path: options.path,
@@ -23,6 +25,7 @@ function default_1(options) {
             }),
             schematics_1.schematic('effect', {
                 flat: options.flat,
+                group: options.group,
                 module: options.module,
                 name: options.name,
                 path: options.path,

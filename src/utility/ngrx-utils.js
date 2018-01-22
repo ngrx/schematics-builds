@@ -24,6 +24,7 @@ function addReducerToState(options) {
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(reducersPath, sourceText, ts.ScriptTarget.Latest, true);
         var reducerPath = "/" + options.sourceDir + "/" + options.path + "/" +
+            (options.group ? 'reducers/' : '') +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             stringUtils.dasherize(options.name) +
             '.reducer';
@@ -151,6 +152,7 @@ function addReducerImportToNgModule(options) {
             route_utils_1.insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
         ];
         var reducerPath = "/" + options.sourceDir + "/" + options.path + "/" +
+            (options.group ? 'reducers/' : '') +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             stringUtils.dasherize(options.name) +
             '.reducer';

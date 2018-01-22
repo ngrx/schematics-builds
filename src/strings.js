@@ -132,12 +132,12 @@ function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.substr(1);
 }
 exports.capitalize = capitalize;
-function uppercase(str) {
-    return str.toUpperCase();
+function group(path, group) {
+    return group ? group + "/" + path : path;
 }
-exports.uppercase = uppercase;
-function lowercase(str) {
-    return str.toLowerCase();
+exports.group = group;
+function featurePath(group, path) {
+    return group ? "../" + path + "/" : './';
 }
-exports.lowercase = lowercase;
+exports.featurePath = featurePath;
 //# sourceMappingURL=strings.js.map
