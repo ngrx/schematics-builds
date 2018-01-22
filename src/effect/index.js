@@ -35,8 +35,8 @@ function addImportToNgModule(options) {
         var effectsName = "" + stringUtils.classify(options.name + "Effects");
         var effectsModuleImport = route_utils_1.insertImport(source, modulePath, 'EffectsModule', '@ngrx/effects');
         var effectsPath = "/" + options.sourceDir + "/" + options.path + "/" +
-            (options.group ? 'effects/' : '') +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
+            (options.group ? 'effects/' : '') +
             stringUtils.dasherize(options.name) +
             '.effects';
         var relativePath = find_module_1.buildRelativePath(modulePath, effectsPath);
