@@ -132,11 +132,14 @@ function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.substr(1);
 }
 exports.capitalize = capitalize;
-function group(path, group) {
-    return group ? group + "/" + path : path;
+function group(name, group) {
+    return group ? group + "/" + name : name;
 }
 exports.group = group;
-function featurePath(group, path) {
+function featurePath(group, flat, path, name) {
+    if (group && !flat) {
+        return "../../" + path + "/" + name + "/";
+    }
     return group ? "../" + path + "/" : './';
 }
 exports.featurePath = featurePath;

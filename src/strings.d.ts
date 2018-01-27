@@ -90,5 +90,5 @@ export declare function underscore(str: string): string;
  @return {String} The capitalized string.
  */
 export declare function capitalize(str: string): string;
-export declare function group(path: string, group: string | undefined): string;
-export declare function featurePath(group: boolean | undefined, path: string): string;
+export declare function group(name: string, group: string | undefined): string;
+export declare function featurePath(group: boolean | undefined, flat: boolean | undefined, path: string, name: string): string;
