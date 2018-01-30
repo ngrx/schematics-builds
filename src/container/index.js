@@ -37,6 +37,7 @@ function addStateToComponent(options) {
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(componentPath, sourceText, ts.ScriptTarget.Latest, true);
         var stateImportPath = find_module_1.buildRelativePath(componentPath, statePath);
+        var storeImport = route_utils_1.insertImport(source, componentPath, 'Store', '@ngrx/store');
         var stateImport = options.state
             ? route_utils_1.insertImport(source, componentPath, "* as fromStore", stateImportPath, true)
             : new change_1.NoopChange();
@@ -53,7 +54,7 @@ function addStateToComponent(options) {
         var storeText = "private store: Store<" + stateType + ">";
         var storeConstructor = [start, "(" + storeText + ")", end].join('');
         var constructorUpdate = new change_1.ReplaceChange(componentPath, pos, "  " + constructorText, "\n\n  " + storeConstructor);
-        var changes = [stateImport, constructorUpdate];
+        var changes = [storeImport, stateImport, constructorUpdate];
         var recorder = host.beginUpdate(componentPath);
         for (var _i = 0, changes_1 = changes; _i < changes_1.length; _i++) {
             var change = changes_1[_i];
