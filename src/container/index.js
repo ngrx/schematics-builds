@@ -53,7 +53,7 @@ function addStateToComponent(options) {
         var _a = constructorText.split('()'), start = _a[0], end = _a[1];
         var storeText = "private store: Store<" + stateType + ">";
         var storeConstructor = [start, "(" + storeText + ")", end].join('');
-        var constructorUpdate = new change_1.ReplaceChange(componentPath, pos, "  " + constructorText, "\n\n  " + storeConstructor);
+        var constructorUpdate = new change_1.ReplaceChange(componentPath, pos, "  " + constructorText + "\n\n", "\n\n  " + storeConstructor);
         var changes = [storeImport, stateImport, constructorUpdate];
         var recorder = host.beginUpdate(componentPath);
         for (var _i = 0, changes_1 = changes; _i < changes_1.length; _i++) {
