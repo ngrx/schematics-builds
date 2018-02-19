@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var /**
  * An operation that does nothing.
  */
-NoopChange = (function () {
+NoopChange = /** @class */ (function () {
     function NoopChange() {
         this.description = 'No operation.';
         this.order = Infinity;
@@ -24,7 +24,7 @@ exports.NoopChange = NoopChange;
 var /**
  * Will add text to the source code.
  */
-InsertChange = (function () {
+InsertChange = /** @class */ (function () {
     function InsertChange(path, pos, toAdd) {
         this.path = path;
         this.pos = pos;
@@ -61,7 +61,7 @@ exports.InsertChange = InsertChange;
 var /**
  * Will remove text from the source code.
  */
-RemoveChange = (function () {
+RemoveChange = /** @class */ (function () {
     function RemoveChange(path, pos, toRemove) {
         this.path = path;
         this.pos = pos;
@@ -90,7 +90,7 @@ exports.RemoveChange = RemoveChange;
 var /**
  * Will replace text from the source code.
  */
-ReplaceChange = (function () {
+ReplaceChange = /** @class */ (function () {
     function ReplaceChange(path, pos, oldText, newText) {
         this.path = path;
         this.pos = pos;

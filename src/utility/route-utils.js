@@ -49,7 +49,7 @@ function insertImport(source, fileToEdit, symbolName, fileName, isDefault) {
         return new change_1.NoopChange();
     }
     // no such import declaration exists
-    var useStrict = ast_utils_1.findNodes(rootNode, ts.SyntaxKind.StringLiteral).filter(function (n) { return n.text === 'use strict'; });
+    var useStrict = ast_utils_1.findNodes(rootNode, ts.SyntaxKind.StringLiteral).filter(function (n) { return n.getText() === 'use strict'; });
     var fallbackPos = 0;
     if (useStrict.length > 0) {
         fallbackPos = useStrict[0].end;
