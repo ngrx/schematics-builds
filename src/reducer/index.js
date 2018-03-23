@@ -10,7 +10,6 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
-require("rxjs/add/operator/merge");
 var stringUtils = require("../strings");
 var find_module_1 = require("../utility/find-module");
 var ngrx_utils_1 = require("../utility/ngrx-utils");

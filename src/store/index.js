@@ -10,7 +10,6 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
-require("rxjs/add/operator/merge");
 var ts = require("typescript");
 var stringUtils = require("../strings");
 var ast_utils_1 = require("../utility/ast-utils");
@@ -19,11 +18,11 @@ var find_module_1 = require("../utility/find-module");
 var route_utils_1 = require("../utility/route-utils");
 function addImportToNgModule(options) {
     return function (host) {
-        if (!options.module) {
+        var modulePath = options.module;
+        if (!modulePath) {
             return host;
         }
-        var modulePath = options.module;
-        if (!host.exists(options.module)) {
+        if (!host.exists(modulePath)) {
             throw new Error('Specified module does not exist');
         }
         var text = host.read(modulePath);
