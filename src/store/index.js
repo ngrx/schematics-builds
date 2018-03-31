@@ -77,6 +77,11 @@ function default_1(options) {
         if (options.module) {
             options.module = find_module_1.findModuleFromOptions(host, options);
         }
+        if (options.root &&
+            options.stateInterface &&
+            options.stateInterface !== 'State') {
+            options.stateInterface = stringUtils.classify(options.stateInterface);
+        }
         var templateSource = schematics_1.apply(schematics_1.url('./files'), [
             schematics_1.template(__assign({}, stringUtils, options, { environmentsPath: environmentsPath })),
             schematics_1.move(sourceDir),
