@@ -13,7 +13,7 @@ function addReducerToState(options) {
         if (!options.reducers) {
             return host;
         }
-        var reducersPath = core_1.normalize("/" + options.sourceDir + "/" + options.path + "/" + options.reducers);
+        var reducersPath = core_1.normalize("/" + options.path + "/" + options.reducers);
         if (!host.exists(reducersPath)) {
             throw new Error('Specified reducers path does not exist');
         }
@@ -23,7 +23,7 @@ function addReducerToState(options) {
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(reducersPath, sourceText, ts.ScriptTarget.Latest, true);
-        var reducerPath = "/" + options.sourceDir + "/" + options.path + "/" +
+        var reducerPath = "/" + options.path + "/" +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             (options.group ? 'reducers/' : '') +
             stringUtils.dasherize(options.name) +
@@ -151,7 +151,7 @@ function addReducerImportToNgModule(options) {
         var commonImports = [
             route_utils_1.insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
         ];
-        var reducerPath = "/" + options.sourceDir + "/" + options.path + "/" +
+        var reducerPath = "/" + options.path + "/" +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             (options.group ? 'reducers/' : '') +
             stringUtils.dasherize(options.name) +

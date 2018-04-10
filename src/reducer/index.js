@@ -8,18 +8,14 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
 var stringUtils = require("../strings");
 var find_module_1 = require("../utility/find-module");
 var ngrx_utils_1 = require("../utility/ngrx-utils");
+var project_1 = require("../utility/project");
 function default_1(options) {
-    options.path = options.path ? core_1.normalize(options.path) : options.path;
-    var sourceDir = options.sourceDir;
-    if (!sourceDir) {
-        throw new schematics_1.SchematicsException("sourceDir option is required.");
-    }
     return function (host, context) {
+        options.path = project_1.getProjectPath(host, options);
         if (options.module) {
             options.module = find_module_1.findModuleFromOptions(host, options);
         }
@@ -28,7 +24,6 @@ function default_1(options) {
             schematics_1.template(__assign({}, stringUtils, { 'if-flat': function (s) {
                     return stringUtils.group(options.flat ? '' : s, options.group ? 'reducers' : '');
                 } }, options, { dot: function () { return '.'; } })),
-            schematics_1.move(sourceDir),
         ]);
         return schematics_1.chain([
             schematics_1.branchAndMerge(schematics_1.chain([

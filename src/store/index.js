@@ -8,7 +8,6 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular-devkit/core");
 var schematics_1 = require("@angular-devkit/schematics");
 var ts = require("typescript");
 var stringUtils = require("../strings");
@@ -16,6 +15,7 @@ var ast_utils_1 = require("../utility/ast-utils");
 var change_1 = require("../utility/change");
 var find_module_1 = require("../utility/find-module");
 var route_utils_1 = require("../utility/route-utils");
+var project_1 = require("../utility/project");
 function addImportToNgModule(options) {
     return function (host) {
         var modulePath = options.module;
@@ -31,9 +31,9 @@ function addImportToNgModule(options) {
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
-        var statePath = "/" + options.sourceDir + "/" + options.path + "/" + options.statePath;
+        var statePath = options.path + "/" + options.statePath;
         var relativePath = find_module_1.buildRelativePath(modulePath, statePath);
-        var environmentsPath = find_module_1.buildRelativePath(statePath, "/" + options.sourceDir + "/environments/environment");
+        var environmentsPath = find_module_1.buildRelativePath(statePath, "/" + options.path + "/environments/environment");
         var storeNgModuleImport = ast_utils_1.addImportToModule(source, modulePath, options.root
             ? "StoreModule.forRoot(reducers, { metaReducers })"
             : "StoreModule.forFeature('" + stringUtils.camelize(options.name) + "', from" + stringUtils.classify(options.name) + ".reducers, { metaReducers: from" + stringUtils.classify(options.name) + ".metaReducers })", relativePath).shift();
@@ -66,14 +66,10 @@ function addImportToNgModule(options) {
     };
 }
 function default_1(options) {
-    options.path = options.path ? core_1.normalize(options.path) : options.path;
-    var sourceDir = options.sourceDir;
-    var statePath = "/" + options.sourceDir + "/" + options.path + "/" + options.statePath + "/index.ts";
-    var environmentsPath = find_module_1.buildRelativePath(statePath, "/" + options.sourceDir + "/environments/environment");
-    if (!sourceDir) {
-        throw new schematics_1.SchematicsException("sourceDir option is required.");
-    }
     return function (host, context) {
+        options.path = project_1.getProjectPath(host, options);
+        var statePath = "/" + options.path + "/" + options.statePath + "/index.ts";
+        var environmentsPath = find_module_1.buildRelativePath(statePath, "/" + options.path + "/environments/environment");
         if (options.module) {
             options.module = find_module_1.findModuleFromOptions(host, options);
         }
@@ -84,7 +80,6 @@ function default_1(options) {
         }
         var templateSource = schematics_1.apply(schematics_1.url('./files'), [
             schematics_1.template(__assign({}, stringUtils, options, { environmentsPath: environmentsPath })),
-            schematics_1.move(sourceDir),
         ]);
         return schematics_1.chain([
             schematics_1.branchAndMerge(schematics_1.chain([

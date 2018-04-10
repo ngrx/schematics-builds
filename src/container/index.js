@@ -15,18 +15,19 @@ var find_module_1 = require("../utility/find-module");
 var change_1 = require("../utility/change");
 var route_utils_1 = require("../utility/route-utils");
 var ngrx_utils_1 = require("../utility/ngrx-utils");
+var project_1 = require("../utility/project");
 function addStateToComponent(options) {
     return function (host) {
         if (!options.state && !options.stateInterface) {
             return host;
         }
-        var statePath = "/" + options.sourceDir + "/" + options.path + "/" + options.state;
+        var statePath = "/" + options.path + "/" + options.state;
         if (options.state) {
             if (!host.exists(statePath)) {
-                throw new Error('Specified state path does not exist');
+                throw new Error("The Specified state path " + statePath + " does not exist");
             }
         }
-        var componentPath = "/" + options.sourceDir + "/" + options.path + "/" +
+        var componentPath = "/" + options.path + "/" +
             (options.flat ? '' : stringUtils.dasherize(options.name) + '/') +
             stringUtils.dasherize(options.name) +
             '.component.ts';
@@ -72,17 +73,13 @@ function addStateToComponent(options) {
 }
 function default_1(options) {
     return function (host, context) {
-        var sourceDir = options.sourceDir;
-        if (!sourceDir) {
-            throw new schematics_1.SchematicsException("sourceDir option is required.");
-        }
+        options.path = project_1.getProjectPath(host, options);
         var opts = ['state', 'stateInterface'].reduce(function (current, key) {
             return ngrx_utils_1.omit(current, key);
         }, options);
         var templateSource = schematics_1.apply(schematics_1.url('./files'), [
             options.spec ? schematics_1.noop() : schematics_1.filter(function (path) { return !path.endsWith('__spec.ts'); }),
             schematics_1.template(__assign({ 'if-flat': function (s) { return (options.flat ? '' : s); } }, stringUtils, options, { dot: function () { return '.'; } })),
-            schematics_1.move(sourceDir),
         ]);
         return schematics_1.chain([
             schematics_1.externalSchematic('@schematics/angular', 'component', __assign({}, opts, { spec: false })),

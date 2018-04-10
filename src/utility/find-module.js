@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular-devkit/core");
-var strings_1 = require("../strings");
 /**
  * Find the module referred by a set of options passed to the schematics.
  */
@@ -10,19 +9,12 @@ function findModuleFromOptions(host, options) {
         return undefined;
     }
     if (!options.module) {
-        var pathToCheck = (options.sourceDir || '') +
-            '/' +
-            (options.path || '') +
-            (options.flat ? '' : '/' + strings_1.dasherize(options.name));
+        var pathToCheck = (options.path || '') +
+            (options.flat ? '' : '/' + core_1.strings.dasherize(options.name));
         return core_1.normalize(findModule(host, pathToCheck));
     }
     else {
-        var modulePath = core_1.normalize('/' +
-            options.sourceDir +
-            '/' +
-            (options.appRoot || options.path) +
-            '/' +
-            options.module);
+        var modulePath = core_1.normalize('/' + options.path + '/' + options.module);
         var moduleBaseName = core_1.normalize(modulePath)
             .split('/')
             .pop();
@@ -62,8 +54,8 @@ function findModule(host, generateDir) {
         }
         dir = dir.parent;
     }
-    throw new Error('Could not find an NgModule for the new component. Use the skip-import ' +
-        'option to skip importing components in NgModule.');
+    throw new Error('Could not find an NgModule. Use the skip-import ' +
+        'option to skip importing in NgModule.');
 }
 exports.findModule = findModule;
 /**
