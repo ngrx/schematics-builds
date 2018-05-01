@@ -11,7 +11,8 @@ function getProjectPath(host, options) {
         project.root = project.root.substr(0, project.root.length - 1);
     }
     if (options.path === undefined) {
-        return "/" + project.root + "/src/app";
+        var projectDirName = project.projectType === 'application' ? 'app' : 'lib';
+        return (project.root ? "/" + project.root : '') + "/src/" + projectDirName;
     }
     return options.path;
 }
