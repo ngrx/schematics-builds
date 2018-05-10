@@ -1,17 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @license
- * Copyright Google Inc. All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-var STRING_DASHERIZE_REGEXP = /[ _]/g;
-var STRING_DECAMELIZE_REGEXP = /([a-z\d])([A-Z])/g;
-var STRING_CAMELIZE_REGEXP = /(-|_|\.|\s)+(.)?/g;
-var STRING_UNDERSCORE_REGEXP_1 = /([a-z\d])([A-Z]+)/g;
-var STRING_UNDERSCORE_REGEXP_2 = /-|\s+/g;
+/// <amd-module name="@ngrx/schematics/src/schematics-core/utility/strings" />
 /**
  * Converts a camelized string into all lower case separated by underscores.
  *
@@ -26,10 +13,7 @@ var STRING_UNDERSCORE_REGEXP_2 = /-|\s+/g;
  @param {String} str The string to decamelize.
  @return {String} the decamelized string.
  */
-function decamelize(str) {
-    return str.replace(STRING_DECAMELIZE_REGEXP, '$1_$2').toLowerCase();
-}
-exports.decamelize = decamelize;
+export declare function decamelize(str: string): string;
 /**
  Replaces underscores, spaces, or camelCase with dashes.
 
@@ -44,10 +28,7 @@ exports.decamelize = decamelize;
  @param {String} str The string to dasherize.
  @return {String} the dasherized string.
  */
-function dasherize(str) {
-    return decamelize(str || '').replace(STRING_DASHERIZE_REGEXP, '-');
-}
-exports.dasherize = dasherize;
+export declare function dasherize(str?: string): string;
 /**
  Returns the lowerCamelCase form of a string.
 
@@ -63,14 +44,7 @@ exports.dasherize = dasherize;
  @param {String} str The string to camelize.
  @return {String} the camelized string.
  */
-function camelize(str) {
-    return str
-        .replace(STRING_CAMELIZE_REGEXP, function (_match, _separator, chr) {
-        return chr ? chr.toUpperCase() : '';
-    })
-        .replace(/^([A-Z])/, function (match) { return match.toLowerCase(); });
-}
-exports.camelize = camelize;
+export declare function camelize(str: string): string;
 /**
  Returns the UpperCamelCase form of a string.
 
@@ -85,13 +59,7 @@ exports.camelize = camelize;
  @param {String} str the string to classify
  @return {String} the classified string
  */
-function classify(str) {
-    return str
-        .split('.')
-        .map(function (part) { return capitalize(camelize(part)); })
-        .join('.');
-}
-exports.classify = classify;
+export declare function classify(str: string): string;
 /**
  More general than decamelize. Returns the lower\_case\_and\_underscored
  form of a string.
@@ -107,13 +75,7 @@ exports.classify = classify;
  @param {String} str The string to underscore.
  @return {String} the underscored string.
  */
-function underscore(str) {
-    return str
-        .replace(STRING_UNDERSCORE_REGEXP_1, '$1_$2')
-        .replace(STRING_UNDERSCORE_REGEXP_2, '_')
-        .toLowerCase();
-}
-exports.underscore = underscore;
+export declare function underscore(str: string): string;
 /**
  Returns the Capitalized form of a string
 
@@ -128,19 +90,6 @@ exports.underscore = underscore;
  @param {String} str The string to capitalize.
  @return {String} The capitalized string.
  */
-function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.substr(1);
-}
-exports.capitalize = capitalize;
-function group(name, group) {
-    return group ? group + "/" + name : name;
-}
-exports.group = group;
-function featurePath(group, flat, path, name) {
-    if (group && !flat) {
-        return "../../" + path + "/" + name + "/";
-    }
-    return group ? "../" + path + "/" : './';
-}
-exports.featurePath = featurePath;
-//# sourceMappingURL=strings.js.map
+export declare function capitalize(str: string): string;
+export declare function group(name: string, group: string | undefined): string;
+export declare function featurePath(group: boolean | undefined, flat: boolean | undefined, path: string, name: string): string;

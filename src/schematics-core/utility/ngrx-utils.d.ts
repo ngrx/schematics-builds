@@ -1,8 +1,8 @@
+/// <amd-module name="@ngrx/schematics/src/schematics-core/utility/ngrx-utils" />
 import * as ts from 'typescript';
 import { Change } from './change';
 import { Rule } from '@angular-devkit/schematics';
-import { Schema as ReducerOptions } from '../reducer/schema';
-export declare function addReducerToState(options: ReducerOptions): Rule;
+export declare function addReducerToState(options: any): Rule;
 /**
  * Insert the reducer into the first defined top level interface
  */
@@ -18,7 +18,7 @@ export declare function addReducerToActionReducerMap(source: ts.SourceFile, redu
 /**
  * Add reducer feature to NgModule
  */
-export declare function addReducerImportToNgModule(options: ReducerOptions): Rule;
+export declare function addReducerImportToNgModule(options: any): Rule;
 export declare function omit<T extends {
     [key: string]: any;
 }>(object: T, keyToRemove: keyof T): Partial<T>;
