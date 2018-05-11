@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/schematics",
-  "version": "v6.0.0-beta.1+37.sha-b329aa1",
+  "version": "v6.0.0-beta.1+39.sha-5b4f067",
   "description": "NgRx Schematics for Angular",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "packageGroup": "NG_UPDATE_PACKAGE_GROUP"
   },  
   "peerDependencies": {
-    "@angular-devkit/core": "^0.5.0",
-    "@angular-devkit/schematics": "^0.5.0"
+    "@angular-devkit/core": "NG_DEVKIT_VERSION",
+    "@angular-devkit/schematics": "NG_DEVKIT_VERSION"
   }
 }
