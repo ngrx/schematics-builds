@@ -1,4 +1,4 @@
-/// <amd-module name="@ngrx/schematics/src/schematics-core/utility/ast-utils" />
+/// <amd-module name="@ngrx/schematics/schematics-core/utility/ast-utils" />
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.

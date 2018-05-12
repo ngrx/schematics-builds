@@ -1,4 +1,4 @@
-/// <amd-module name="@ngrx/schematics/src/schematics-core/utility/config" />
+/// <amd-module name="@ngrx/schematics/schematics-core/utility/config" />
 import { Tree } from '@angular-devkit/schematics';
 import { experimental } from '@angular-devkit/core';
 export interface AppConfig {

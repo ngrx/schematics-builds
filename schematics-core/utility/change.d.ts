@@ -1,4 +1,4 @@
-/// <amd-module name="@ngrx/schematics/src/schematics-core/utility/change" />
+/// <amd-module name="@ngrx/schematics/schematics-core/utility/change" />
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.

@@ -1,4 +1,4 @@
-/// <amd-module name="@ngrx/schematics/src/schematics-core/index" />
+/// <amd-module name="@ngrx/schematics/schematics-core/index" />
 import { dasherize, decamelize, camelize, classify, underscore, group, capitalize, featurePath } from './utility/strings';
 export { findNodes, getSourceNodes, getDecoratorMetadata, getContentOfKeyLiteral, insertAfterLastOccurrence, addBootstrapToModule, addDeclarationToModule, addExportToModule, addImportToModule, addProviderToModule } from './utility/ast-utils';
 export { Host, Change, NoopChange, InsertChange, RemoveChange, ReplaceChange } from './utility/change';
@@ -17,3 +17,4 @@ export declare const stringUtils: {
     capitalize: typeof capitalize;
     featurePath: typeof featurePath;
 };
+export { updatePackage } from './utility/update';

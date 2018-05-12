@@ -1,4 +1,4 @@
-/// <amd-module name="@ngrx/schematics/src/schematics-core/utility/strings" />
+/// <amd-module name="@ngrx/schematics/schematics-core/utility/strings" />
 /**
  * Converts a camelized string into all lower case separated by underscores.
  *
@@ -8,10 +8,6 @@
  decamelize('css-class-name');    // 'css-class-name'
  decamelize('my favorite items'); // 'my favorite items'
  ```
-
- @method decamelize
- @param {String} str The string to decamelize.
- @return {String} the decamelized string.
  */
 export declare function decamelize(str: string): string;
 /**
@@ -23,10 +19,6 @@ export declare function decamelize(str: string): string;
  dasherize('css-class-name');    // 'css-class-name'
  dasherize('my favorite items'); // 'my-favorite-items'
  ```
-
- @method dasherize
- @param {String} str The string to dasherize.
- @return {String} the dasherized string.
  */
 export declare function dasherize(str?: string): string;
 /**
@@ -39,10 +31,6 @@ export declare function dasherize(str?: string): string;
  camelize('my favorite items');  // 'myFavoriteItems'
  camelize('My Favorite Items');  // 'myFavoriteItems'
  ```
-
- @method camelize
- @param {String} str The string to camelize.
- @return {String} the camelized string.
  */
 export declare function camelize(str: string): string;
 /**
@@ -54,10 +42,6 @@ export declare function camelize(str: string): string;
  'css-class-name'.classify();     // 'CssClassName'
  'my favorite items'.classify();  // 'MyFavoriteItems'
  ```
-
- @method classify
- @param {String} str the string to classify
- @return {String} the classified string
  */
 export declare function classify(str: string): string;
 /**
@@ -70,10 +54,6 @@ export declare function classify(str: string): string;
  'css-class-name'.underscore();     // 'css_class_name'
  'my favorite items'.underscore();  // 'my_favorite_items'
  ```
-
- @method underscore
- @param {String} str The string to underscore.
- @return {String} the underscored string.
  */
 export declare function underscore(str: string): string;
 /**
@@ -85,10 +65,6 @@ export declare function underscore(str: string): string;
  'css-class-name'.capitalize()    // 'Css-class-name'
  'my favorite items'.capitalize() // 'My favorite items'
  ```
-
- @method capitalize
- @param {String} str The string to capitalize.
- @return {String} The capitalized string.
  */
 export declare function capitalize(str: string): string;
 export declare function group(name: string, group: string | undefined): string;

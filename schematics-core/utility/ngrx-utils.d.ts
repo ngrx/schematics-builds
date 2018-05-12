@@ -1,4 +1,4 @@
-/// <amd-module name="@ngrx/schematics/src/schematics-core/utility/ngrx-utils" />
+/// <amd-module name="@ngrx/schematics/schematics-core/utility/ngrx-utils" />
 import * as ts from 'typescript';
 import { Change } from './change';
 import { Rule } from '@angular-devkit/schematics';
