@@ -32,4 +32,9 @@ export interface Schema {
      * Specifies if this is grouped within sub folders
      */
     group?: boolean;
+    /**
+     * Specifies if api success and failure actions, reducer, and effects
+     * should be generated as part of this feature.
+     */
+    api?: boolean;
 }

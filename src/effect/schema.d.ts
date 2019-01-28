@@ -36,4 +36,8 @@ export interface Schema {
      * Specifies if this is grouped within an 'effects' folder
      */
     group?: boolean;
+    /**
+     * Specifies if effect has api success and failure actions wired up
+     */
+    api?: boolean;
 }

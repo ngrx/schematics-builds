@@ -36,4 +36,9 @@ export interface Schema {
      * Specifies if this is grouped within a feature
      */
     feature?: boolean;
+    /**
+     * Specifies if api success and failure actions
+     * should be added to the reducer.
+     */
+    api?: boolean;
 }

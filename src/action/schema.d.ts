@@ -24,4 +24,9 @@ export interface Schema {
      * Group actions file within 'actions' folder
      */
     group?: boolean;
+    /**
+     * Specifies if api success and failure actions
+     * should be generated.
+     */
+    api?: boolean;
 }
