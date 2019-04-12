@@ -1,6 +1,6 @@
 {
   "name": "@ngrx/schematics",
-  "version": "7.4.0+38.sha-8901abd",
+  "version": "7.4.0+39.sha-db5c141",
   "description": "NgRx Schematics for Angular",
   "repository": {
     "type": "git",
