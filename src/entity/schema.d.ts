@@ -32,4 +32,9 @@ export interface Schema {
      * Specifies if this is grouped within sub folders
      */
     group?: boolean;
+    /**
+     * Specifies whether to generate action creators
+     * instead of action classes.
+     */
+    actionCreators?: boolean;
 }
