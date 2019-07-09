@@ -45,4 +45,8 @@ export interface Schema {
      * handling actions, reducers, and effects.
      */
     creators?: boolean;
+    /**
+     * Setup root effects module without registering initial effects.
+     */
+    minimal?: boolean;
 }
