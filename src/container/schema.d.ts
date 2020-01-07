@@ -33,9 +33,9 @@ export interface Schema {
      */
     prefix?: string;
     /**
-     * The file extension to be used for style files.
+     * The file extension or preprocessor to use for style files.
      */
-    styleext?: string;
+    style?: string;
     /**
      * Specifies if a spec file is generated.
      */
