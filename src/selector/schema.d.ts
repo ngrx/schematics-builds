@@ -17,9 +17,9 @@ export interface Schema {
      */
     flat?: boolean;
     /**
-     * Specifies if a spec file is generated.
+     * When true, does not create test files.
      */
-    spec?: boolean;
+    skipTest?: boolean;
     /**
      * Specifies if this is grouped within a feature
      */
