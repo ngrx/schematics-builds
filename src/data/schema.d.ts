@@ -14,8 +14,13 @@ export interface Schema {
     project?: string;
     /**
      * When true, does not create test files.
+     * @deprecated use skipTests instead
      */
     skipTest?: boolean;
+    /**
+     * When true, does not create test files.
+     */
+    skipTests?: boolean;
     /**
      * Flag to indicate if a dir is created.
      */
