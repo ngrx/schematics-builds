@@ -1,44 +1,51 @@
-(function (factory) {
-    if (typeof module === "object" && typeof module.exports === "object") {
-        var v = factory(require, exports);
-        if (v !== undefined) module.exports = v;
-    }
-    else if (typeof define === "function" && define.amd) {
-        define("@ngrx/schematics/src/entity/index", ["require", "exports", "@angular-devkit/schematics", "@ngrx/schematics/schematics-core"], factory);
-    }
-})(function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    const schematics_1 = require("@angular-devkit/schematics");
-    const schematics_core_1 = require("@ngrx/schematics/schematics-core");
-    function default_1(options) {
-        return (host, context) => {
-            options.path = schematics_core_1.getProjectPath(host, options);
-            const parsedPath = schematics_core_1.parseName(options.path, options.name);
-            options.name = parsedPath.name;
-            options.path = parsedPath.path;
-            if (!options.skipTests && options.skipTest) {
-                options.skipTests = options.skipTest;
-            }
-            if (options.module) {
-                options.module = schematics_core_1.findModuleFromOptions(host, options);
-            }
-            const templateOptions = Object.assign(Object.assign(Object.assign({}, schematics_core_1.stringUtils), { 'if-flat': (s) => (options.flat ? '' : s), 'group-actions': (name) => schematics_core_1.stringUtils.group(name, options.group ? 'actions' : ''), 'group-models': (name) => schematics_core_1.stringUtils.group(name, options.group ? 'models' : ''), 'group-reducers': (s) => schematics_core_1.stringUtils.group(s, options.group ? 'reducers' : ''), isIvyEnabled: schematics_core_1.isIvyEnabled(host, 'tsconfig.json') }), options);
-            const commonTemplates = schematics_1.apply(schematics_1.url('./common-files'), [
-                options.skipTests
-                    ? schematics_1.filter(path => !path.endsWith('.spec.ts.template'))
-                    : schematics_1.noop(),
-                schematics_1.applyTemplates(templateOptions),
-                schematics_1.move(parsedPath.path),
-            ]);
-            const templateSource = schematics_1.apply(schematics_1.url(options.creators ? './creator-files' : './files'), [schematics_1.applyTemplates(templateOptions), schematics_1.move(parsedPath.path)]);
-            return schematics_1.chain([
-                schematics_core_1.addReducerToState(Object.assign(Object.assign({}, options), { plural: true })),
-                schematics_core_1.addReducerImportToNgModule(Object.assign(Object.assign({}, options), { plural: true })),
-                schematics_1.branchAndMerge(schematics_1.chain([schematics_1.mergeWith(commonTemplates), schematics_1.mergeWith(templateSource)])),
-            ])(host, context);
-        };
-    }
-    exports.default = default_1;
-});
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9tb2R1bGVzL3NjaGVtYXRpY3Mvc3JjL2VudGl0eS9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7OztJQUFBLDJEQWVvQztJQUNwQyxzRUFRMEM7SUFHMUMsbUJBQXdCLE9BQXNCO1FBQzVDLE9BQU8sQ0FBQyxJQUFVLEVBQUUsT0FBeUIsRUFBRSxFQUFFO1lBQy9DLE9BQU8sQ0FBQyxJQUFJLEdBQUcsZ0NBQWMsQ0FBQyxJQUFJLEVBQUUsT0FBTyxDQUFDLENBQUM7WUFFN0MsTUFBTSxVQUFVLEdBQUcsMkJBQVMsQ0FBQyxPQUFPLENBQUMsSUFBSSxFQUFFLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQztZQUN6RCxPQUFPLENBQUMsSUFBSSxHQUFHLFVBQVUsQ0FBQyxJQUFJLENBQUM7WUFDL0IsT0FBTyxDQUFDLElBQUksR0FBRyxVQUFVLENBQUMsSUFBSSxDQUFDO1lBRS9CLElBQUksQ0FBQyxPQUFPLENBQUMsU0FBUyxJQUFJLE9BQU8sQ0FBQyxRQUFRLEVBQUU7Z0JBQzFDLE9BQU8sQ0FBQyxTQUFTLEdBQUcsT0FBTyxDQUFDLFFBQVEsQ0FBQzthQUN0QztZQUVELElBQUksT0FBTyxDQUFDLE1BQU0sRUFBRTtnQkFDbEIsT0FBTyxDQUFDLE1BQU0sR0FBRyx1Q0FBcUIsQ0FBQyxJQUFJLEVBQUUsT0FBTyxDQUFDLENBQUM7YUFDdkQ7WUFFRCxNQUFNLGVBQWUsaURBQ2hCLDZCQUFXLEtBQ2QsU0FBUyxFQUFFLENBQUMsQ0FBUyxFQUFFLEVBQUUsQ0FBQyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDLEVBQUUsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLEVBQ2pELGVBQWUsRUFBRSxDQUFDLElBQVksRUFBRSxFQUFFLENBQ2hDLDZCQUFXLENBQUMsS0FBSyxDQUFDLElBQUksRUFBRSxPQUFPLENBQUMsS0FBSyxDQUFDLENBQUMsQ0FBQyxTQUFTLENBQUMsQ0FBQyxDQUFDLEVBQUUsQ0FBQyxFQUN6RCxjQUFjLEVBQUUsQ0FBQyxJQUFZLEVBQUUsRUFBRSxDQUMvQiw2QkFBVyxDQUFDLEtBQUssQ0FBQyxJQUFJLEVBQUUsT0FBTyxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxFQUFFLENBQUMsRUFDeEQsZ0JBQWdCLEVBQUUsQ0FBQyxDQUFTLEVBQUUsRUFBRSxDQUM5Qiw2QkFBVyxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsT0FBTyxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQyxFQUFFLENBQUMsRUFDdkQsWUFBWSxFQUFFLDhCQUFZLENBQUMsSUFBSSxFQUFFLGVBQWUsQ0FBQyxLQUM3QyxPQUFrQixDQUN2QixDQUFDO1lBRUYsTUFBTSxlQUFlLEdBQUcsa0JBQUssQ0FBQyxnQkFBRyxDQUFDLGdCQUFnQixDQUFDLEVBQUU7Z0JBQ25ELE9BQU8sQ0FBQyxTQUFTO29CQUNmLENBQUMsQ0FBQyxtQkFBTSxDQUFDLElBQUksQ0FBQyxFQUFFLENBQUMsQ0FBQyxJQUFJLENBQUMsUUFBUSxDQUFDLG1CQUFtQixDQUFDLENBQUM7b0JBQ3JELENBQUMsQ0FBQyxpQkFBSSxFQUFFO2dCQUNWLDJCQUFjLENBQUMsZUFBZSxDQUFDO2dCQUMvQixpQkFBSSxDQUFDLFVBQVUsQ0FBQyxJQUFJLENBQUM7YUFDdEIsQ0FBQyxDQUFDO1lBRUgsTUFBTSxjQUFjLEdBQUcsa0JBQUssQ0FDMUIsZ0JBQUcsQ0FBQyxPQUFPLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxpQkFBaUIsQ0FBQyxDQUFDLENBQUMsU0FBUyxDQUFDLEVBQ3JELENBQUMsMkJBQWMsQ0FBQyxlQUFlLENBQUMsRUFBRSxpQkFBSSxDQUFDLFVBQVUsQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUN6RCxDQUFDO1lBRUYsT0FBTyxrQkFBSyxDQUFDO2dCQUNYLG1DQUFpQixpQ0FBTSxPQUFPLEtBQUUsTUFBTSxFQUFFLElBQUksSUFBRztnQkFDL0MsNENBQTBCLGlDQUFNLE9BQU8sS0FBRSxNQUFNLEVBQUUsSUFBSSxJQUFHO2dCQUN4RCwyQkFBYyxDQUNaLGtCQUFLLENBQUMsQ0FBQyxzQkFBUyxDQUFDLGVBQWUsQ0FBQyxFQUFFLHNCQUFTLENBQUMsY0FBYyxDQUFDLENBQUMsQ0FBQyxDQUMvRDthQUNGLENBQUMsQ0FBQyxJQUFJLEVBQUUsT0FBTyxDQUFDLENBQUM7UUFDcEIsQ0FBQyxDQUFDO0lBQ0osQ0FBQztJQWxERCw0QkFrREMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge1xuICBSdWxlLFxuICBTY2hlbWF0aWNzRXhjZXB0aW9uLFxuICBhcHBseSxcbiAgYXBwbHlUZW1wbGF0ZXMsXG4gIGJyYW5jaEFuZE1lcmdlLFxuICBjaGFpbixcbiAgZmlsdGVyLFxuICBtZXJnZVdpdGgsXG4gIG1vdmUsXG4gIG5vb3AsXG4gIHRlbXBsYXRlLFxuICB1cmwsXG4gIFRyZWUsXG4gIFNjaGVtYXRpY0NvbnRleHQsXG59IGZyb20gJ0Bhbmd1bGFyLWRldmtpdC9zY2hlbWF0aWNzJztcbmltcG9ydCB7XG4gIHN0cmluZ1V0aWxzLFxuICBhZGRSZWR1Y2VyVG9TdGF0ZSxcbiAgYWRkUmVkdWNlckltcG9ydFRvTmdNb2R1bGUsXG4gIGdldFByb2plY3RQYXRoLFxuICBmaW5kTW9kdWxlRnJvbU9wdGlvbnMsXG4gIHBhcnNlTmFtZSxcbiAgaXNJdnlFbmFibGVkLFxufSBmcm9tICdAbmdyeC9zY2hlbWF0aWNzL3NjaGVtYXRpY3MtY29yZSc7XG5pbXBvcnQgeyBTY2hlbWEgYXMgRW50aXR5T3B0aW9ucyB9IGZyb20gJy4vc2NoZW1hJztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24ob3B0aW9uczogRW50aXR5T3B0aW9ucyk6IFJ1bGUge1xuICByZXR1cm4gKGhvc3Q6IFRyZWUsIGNvbnRleHQ6IFNjaGVtYXRpY0NvbnRleHQpID0+IHtcbiAgICBvcHRpb25zLnBhdGggPSBnZXRQcm9qZWN0UGF0aChob3N0LCBvcHRpb25zKTtcblxuICAgIGNvbnN0IHBhcnNlZFBhdGggPSBwYXJzZU5hbWUob3B0aW9ucy5wYXRoLCBvcHRpb25zLm5hbWUpO1xuICAgIG9wdGlvbnMubmFtZSA9IHBhcnNlZFBhdGgubmFtZTtcbiAgICBvcHRpb25zLnBhdGggPSBwYXJzZWRQYXRoLnBhdGg7XG5cbiAgICBpZiAoIW9wdGlvbnMuc2tpcFRlc3RzICYmIG9wdGlvbnMuc2tpcFRlc3QpIHtcbiAgICAgIG9wdGlvbnMuc2tpcFRlc3RzID0gb3B0aW9ucy5za2lwVGVzdDtcbiAgICB9XG5cbiAgICBpZiAob3B0aW9ucy5tb2R1bGUpIHtcbiAgICAgIG9wdGlvbnMubW9kdWxlID0gZmluZE1vZHVsZUZyb21PcHRpb25zKGhvc3QsIG9wdGlvbnMpO1xuICAgIH1cblxuICAgIGNvbnN0IHRlbXBsYXRlT3B0aW9ucyA9IHtcbiAgICAgIC4uLnN0cmluZ1V0aWxzLFxuICAgICAgJ2lmLWZsYXQnOiAoczogc3RyaW5nKSA9PiAob3B0aW9ucy5mbGF0ID8gJycgOiBzKSxcbiAgICAgICdncm91cC1hY3Rpb25zJzogKG5hbWU6IHN0cmluZykgPT5cbiAgICAgICAgc3RyaW5nVXRpbHMuZ3JvdXAobmFtZSwgb3B0aW9ucy5ncm91cCA/ICdhY3Rpb25zJyA6ICcnKSxcbiAgICAgICdncm91cC1tb2RlbHMnOiAobmFtZTogc3RyaW5nKSA9PlxuICAgICAgICBzdHJpbmdVdGlscy5ncm91cChuYW1lLCBvcHRpb25zLmdyb3VwID8gJ21vZGVscycgOiAnJyksXG4gICAgICAnZ3JvdXAtcmVkdWNlcnMnOiAoczogc3RyaW5nKSA9PlxuICAgICAgICBzdHJpbmdVdGlscy5ncm91cChzLCBvcHRpb25zLmdyb3VwID8gJ3JlZHVjZXJzJyA6ICcnKSxcbiAgICAgIGlzSXZ5RW5hYmxlZDogaXNJdnlFbmFibGVkKGhvc3QsICd0c2NvbmZpZy5qc29uJyksXG4gICAgICAuLi4ob3B0aW9ucyBhcyBvYmplY3QpLFxuICAgIH07XG5cbiAgICBjb25zdCBjb21tb25UZW1wbGF0ZXMgPSBhcHBseSh1cmwoJy4vY29tbW9uLWZpbGVzJyksIFtcbiAgICAgIG9wdGlvbnMuc2tpcFRlc3RzXG4gICAgICAgID8gZmlsdGVyKHBhdGggPT4gIXBhdGguZW5kc1dpdGgoJy5zcGVjLnRzLnRlbXBsYXRlJykpXG4gICAgICAgIDogbm9vcCgpLFxuICAgICAgYXBwbHlUZW1wbGF0ZXModGVtcGxhdGVPcHRpb25zKSxcbiAgICAgIG1vdmUocGFyc2VkUGF0aC5wYXRoKSxcbiAgICBdKTtcblxuICAgIGNvbnN0IHRlbXBsYXRlU291cmNlID0gYXBwbHkoXG4gICAgICB1cmwob3B0aW9ucy5jcmVhdG9ycyA/ICcuL2NyZWF0b3ItZmlsZXMnIDogJy4vZmlsZXMnKSxcbiAgICAgIFthcHBseVRlbXBsYXRlcyh0ZW1wbGF0ZU9wdGlvbnMpLCBtb3ZlKHBhcnNlZFBhdGgucGF0aCldXG4gICAgKTtcblxuICAgIHJldHVybiBjaGFpbihbXG4gICAgICBhZGRSZWR1Y2VyVG9TdGF0ZSh7IC4uLm9wdGlvbnMsIHBsdXJhbDogdHJ1ZSB9KSxcbiAgICAgIGFkZFJlZHVjZXJJbXBvcnRUb05nTW9kdWxlKHsgLi4ub3B0aW9ucywgcGx1cmFsOiB0cnVlIH0pLFxuICAgICAgYnJhbmNoQW5kTWVyZ2UoXG4gICAgICAgIGNoYWluKFttZXJnZVdpdGgoY29tbW9uVGVtcGxhdGVzKSwgbWVyZ2VXaXRoKHRlbXBsYXRlU291cmNlKV0pXG4gICAgICApLFxuICAgIF0pKGhvc3QsIGNvbnRleHQpO1xuICB9O1xufVxuIl19
+"use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+exports.__esModule = true;
+var schematics_1 = require("@angular-devkit/schematics");
+var schematics_core_1 = require("@ngrx/schematics/schematics-core");
+function default_1(options) {
+    return function (host, context) {
+        options.path = schematics_core_1.getProjectPath(host, options);
+        var parsedPath = schematics_core_1.parseName(options.path, options.name);
+        options.name = parsedPath.name;
+        options.path = parsedPath.path;
+        if (!options.skipTests && options.skipTest) {
+            options.skipTests = options.skipTest;
+        }
+        if (options.module) {
+            options.module = schematics_core_1.findModuleFromOptions(host, options);
+        }
+        var templateOptions = __assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) { return (options.flat ? '' : s); }, 'group-actions': function (name) {
+                return schematics_core_1.stringUtils.group(name, options.group ? 'actions' : '');
+            }, 'group-models': function (name) {
+                return schematics_core_1.stringUtils.group(name, options.group ? 'models' : '');
+            }, 'group-reducers': function (s) {
+                return schematics_core_1.stringUtils.group(s, options.group ? 'reducers' : '');
+            }, isIvyEnabled: schematics_core_1.isIvyEnabled(host, 'tsconfig.json') }), options);
+        var commonTemplates = schematics_1.apply(schematics_1.url('./common-files'), [
+            options.skipTests
+                ? schematics_1.filter(function (path) { return !path.endsWith('.spec.ts.template'); })
+                : schematics_1.noop(),
+            schematics_1.applyTemplates(templateOptions),
+            schematics_1.move(parsedPath.path),
+        ]);
+        var templateSource = schematics_1.apply(schematics_1.url(options.creators ? './creator-files' : './files'), [schematics_1.applyTemplates(templateOptions), schematics_1.move(parsedPath.path)]);
+        return schematics_1.chain([
+            schematics_core_1.addReducerToState(__assign(__assign({}, options), { plural: true })),
+            schematics_core_1.addReducerImportToNgModule(__assign(__assign({}, options), { plural: true })),
+            schematics_1.branchAndMerge(schematics_1.chain([schematics_1.mergeWith(commonTemplates), schematics_1.mergeWith(templateSource)])),
+        ])(host, context);
+    };
+}
+exports["default"] = default_1;
+//# sourceMappingURL=index.js.map

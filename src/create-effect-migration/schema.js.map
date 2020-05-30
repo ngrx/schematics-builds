@@ -1,0 +1,1 @@
+{"version":3,"file":"schema.js","sourceRoot":"","sources":["../../../../../modules/schematics/src/create-effect-migration/schema.ts"],"names":[],"mappings":"","sourcesContent":["export interface Schema {}\n"]}

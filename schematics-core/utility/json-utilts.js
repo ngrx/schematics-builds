@@ -1,24 +1,36 @@
-(function (factory) {
-    if (typeof module === "object" && typeof module.exports === "object") {
-        var v = factory(require, exports);
-        if (v !== undefined) module.exports = v;
-    }
-    else if (typeof define === "function" && define.amd) {
-        define("@ngrx/schematics/schematics-core/utility/json-utilts", ["require", "exports"], factory);
-    }
-})(function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    // https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/utility/json-utils.ts
-    function findPropertyInAstObject(node, propertyName) {
-        let maybeNode = null;
-        for (const property of node.properties) {
+"use strict";
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+exports.__esModule = true;
+// https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/utility/json-utils.ts
+function findPropertyInAstObject(node, propertyName) {
+    var e_1, _a;
+    var maybeNode = null;
+    try {
+        for (var _b = __values(node.properties), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var property = _c.value;
             if (property.key.value == propertyName) {
                 maybeNode = property.value;
             }
         }
-        return maybeNode;
     }
-    exports.findPropertyInAstObject = findPropertyInAstObject;
-});
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoianNvbi11dGlsdHMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9tb2R1bGVzL3NjaGVtYXRpY3Mvc2NoZW1hdGljcy1jb3JlL3V0aWxpdHkvanNvbi11dGlsdHMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7SUFFQSx1R0FBdUc7SUFDdkcsU0FBZ0IsdUJBQXVCLENBQ3JDLElBQW1CLEVBQ25CLFlBQW9CO1FBRXBCLElBQUksU0FBUyxHQUF1QixJQUFJLENBQUM7UUFDekMsS0FBSyxNQUFNLFFBQVEsSUFBSSxJQUFJLENBQUMsVUFBVSxFQUFFO1lBQ3RDLElBQUksUUFBUSxDQUFDLEdBQUcsQ0FBQyxLQUFLLElBQUksWUFBWSxFQUFFO2dCQUN0QyxTQUFTLEdBQUcsUUFBUSxDQUFDLEtBQUssQ0FBQzthQUM1QjtTQUNGO1FBRUQsT0FBTyxTQUFTLENBQUM7SUFDbkIsQ0FBQztJQVpELDBEQVlDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSnNvbkFzdE5vZGUsIEpzb25Bc3RPYmplY3QgfSBmcm9tICdAYW5ndWxhci1kZXZraXQvY29yZSc7XG5cbi8vIGh0dHBzOi8vZ2l0aHViLmNvbS9hbmd1bGFyL2FuZ3VsYXItY2xpL2Jsb2IvbWFzdGVyL3BhY2thZ2VzL3NjaGVtYXRpY3MvYW5ndWxhci91dGlsaXR5L2pzb24tdXRpbHMudHNcbmV4cG9ydCBmdW5jdGlvbiBmaW5kUHJvcGVydHlJbkFzdE9iamVjdChcbiAgbm9kZTogSnNvbkFzdE9iamVjdCxcbiAgcHJvcGVydHlOYW1lOiBzdHJpbmdcbik6IEpzb25Bc3ROb2RlIHwgbnVsbCB7XG4gIGxldCBtYXliZU5vZGU6IEpzb25Bc3ROb2RlIHwgbnVsbCA9IG51bGw7XG4gIGZvciAoY29uc3QgcHJvcGVydHkgb2Ygbm9kZS5wcm9wZXJ0aWVzKSB7XG4gICAgaWYgKHByb3BlcnR5LmtleS52YWx1ZSA9PSBwcm9wZXJ0eU5hbWUpIHtcbiAgICAgIG1heWJlTm9kZSA9IHByb3BlcnR5LnZhbHVlO1xuICAgIH1cbiAgfVxuXG4gIHJldHVybiBtYXliZU5vZGU7XG59XG4iXX0=
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (_c && !_c.done && (_a = _b["return"])) _a.call(_b);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    return maybeNode;
+}
+exports.findPropertyInAstObject = findPropertyInAstObject;
+//# sourceMappingURL=json-utilts.js.map
