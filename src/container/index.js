@@ -122,7 +122,9 @@ function default_1(options) {
             schematics_1.move(parsedPath.path),
         ]);
         // Remove all undefined values to use the schematic defaults (in angular.json or the Angular schema)
-        Object.keys(opts).forEach(function (key) { return (opts[key] === undefined ? delete opts[key] : {}); });
+        Object.keys(opts).forEach(function (key) {
+            return opts[key] === undefined ? delete opts[key] : {};
+        });
         return schematics_1.chain([
             schematics_1.externalSchematic('@schematics/angular', 'component', __assign(__assign({}, opts), { skipTests: true })),
             addStateToComponent(options),
