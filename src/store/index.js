@@ -65,13 +65,10 @@ function addImportToNgModule(options) {
         var statePath = options.path + "/" + options.statePath;
         var relativePath = schematics_core_1.buildRelativePath(modulePath, statePath);
         var environmentsPath = schematics_core_1.buildRelativePath(statePath, options.path + "/environments/environment");
-        var runtimeChecks = "\n      runtimeChecks: {\n        strictStateImmutability: true,\n        strictActionImmutability: true,\n      }\n   ";
         var rootStoreReducers = options.minimal ? "{}" : "reducers";
-        var rootStoreConfig = options.minimal
-            ? "{ " + runtimeChecks + " }"
-            : "{\n      metaReducers, " + runtimeChecks + " }";
+        var rootStoreConfig = options.minimal ? "" : ", { metaReducers }";
         var storeNgModuleImport = schematics_core_1.addImportToModule(source, modulePath, options.root
-            ? "StoreModule.forRoot(" + rootStoreReducers + ", " + rootStoreConfig + ")"
+            ? "StoreModule.forRoot(" + rootStoreReducers + rootStoreConfig + ")"
             : "StoreModule.forFeature(from" + schematics_core_1.stringUtils.classify(options.name) + "." + schematics_core_1.stringUtils.camelize(options.name) + "FeatureKey, from" + schematics_core_1.stringUtils.classify(options.name) + ".reducers, { metaReducers: from" + schematics_core_1.stringUtils.classify(options.name) + ".metaReducers })", relativePath).shift();
         var commonImports = [
             schematics_core_1.insertImport(source, modulePath, 'StoreModule', '@ngrx/store'),
@@ -89,7 +86,15 @@ function addImportToNgModule(options) {
         }
         var rootImports = [];
         if (options.root) {
-            var storeDevtoolsNgModuleImport = schematics_core_1.addImportToModule(source, modulePath, "!environment.production ? StoreDevtoolsModule.instrument() : []", relativePath).shift();
+            var hasImports_1 = false;
+            schematics_core_1.visitNgModuleImports(source, function (_, importNodes) {
+                hasImports_1 = importNodes.length > 0;
+            });
+            // `addImportToModule` adds a comma to imports when there are already imports present
+            // because at this time the store import hasn't been committed yet, `addImportToModule` wont add a comma
+            // so we have to add it here for empty import arrays
+            var adjectiveComma = hasImports_1 ? '' : ', ';
+            var storeDevtoolsNgModuleImport = schematics_core_1.addImportToModule(source, modulePath, adjectiveComma + "!environment.production ? StoreDevtoolsModule.instrument() : []", relativePath).shift();
             rootImports = rootImports.concat([
                 schematics_core_1.insertImport(source, modulePath, 'StoreDevtoolsModule', '@ngrx/store-devtools'),
                 schematics_core_1.insertImport(source, modulePath, 'environment', environmentsPath),
