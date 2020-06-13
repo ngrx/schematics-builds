@@ -15,6 +15,7 @@ var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("@ngrx/schematics/schematics-core");
 function default_1(options) {
     return function (host, context) {
+        var projectConfig = schematics_core_1.getProject(host, options);
         options.path = schematics_core_1.getProjectPath(host, options);
         var parsedPath = schematics_core_1.parseName(options.path, options.name);
         options.name = parsedPath.name;
@@ -31,7 +32,8 @@ function default_1(options) {
                 return schematics_core_1.stringUtils.group(name, options.group ? 'models' : '');
             }, 'group-reducers': function (s) {
                 return schematics_core_1.stringUtils.group(s, options.group ? 'reducers' : '');
-            }, isIvyEnabled: schematics_core_1.isIvyEnabled(host, 'tsconfig.json') }), options);
+            }, isIvyEnabled: schematics_core_1.isIvyEnabled(host, 'tsconfig.json') &&
+                schematics_core_1.isIvyEnabled(host, projectConfig.root + "/tsconfig.app.json") }), options);
         var commonTemplates = schematics_1.apply(schematics_1.url('./common-files'), [
             options.skipTests
                 ? schematics_1.filter(function (path) { return !path.endsWith('.spec.ts.template'); })
