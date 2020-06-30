@@ -2,9 +2,6 @@
 exports.__esModule = true;
 var schematics_1 = require("@angular-devkit/schematics");
 function default_1(options) {
-    if (!options.skipTests && options.skipTest) {
-        options.skipTests = options.skipTest;
-    }
     return function (host, context) {
         return schematics_1.chain([
             schematics_1.schematic('action', {

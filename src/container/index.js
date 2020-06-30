@@ -105,9 +105,6 @@ function addStateToComponent(options) {
 function default_1(options) {
     return function (host, context) {
         options.path = schematics_core_1.getProjectPath(host, options);
-        if (!options.skipTests && options.skipTest) {
-            options.skipTests = options.skipTest;
-        }
         var parsedPath = schematics_core_1.parseName(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;

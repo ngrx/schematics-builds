@@ -108,9 +108,6 @@ function getEffectEnd(creators) {
 function default_1(options) {
     return function (host, context) {
         options.path = schematics_core_1.getProjectPath(host, options);
-        if (!options.skipTests && options.skipTest) {
-            options.skipTests = options.skipTest;
-        }
         if (options.module) {
             options.module = schematics_core_1.findModuleFromOptions(host, options);
         }
