@@ -41,6 +41,6 @@
   "main": "src/index.js",
   "typings": "src/index.d.ts",
   "dependencies": {
-    "@angular/core": "^10.0.0"
+    "@angular/core": "^11.0.2"
   }
 }
