@@ -1,1 +1,0 @@
-{"version":3,"file":"update.js","sourceRoot":"","sources":["../../../../../modules/schematics/schematics-core/testing/update.ts"],"names":[],"mappings":";;;AAAa,QAAA,cAAc,GAAG,OAAO,CAAC;AACzB,QAAA,eAAe,GAAG,CAAC,GAAG,EAAE,GAAG,EAAE,EAAE,CAAC,CAAC","sourcesContent":["export const upgradeVersion = '6.0.0';\r\nexport const versionPrefixes = ['~', '^', ''];\r\n"]}

@@ -25,8 +25,15 @@ var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("@ngrx/schematics/schematics-core");
 function migrateToCreators() {
-    return function (tree) {
-        schematics_core_1.visitTSSourceFiles(tree, function (sourceFile) {
+    return function (host) {
+        return host.visit(function (path) {
+            if (!path.endsWith('.ts')) {
+                return;
+            }
+            var sourceFile = ts.createSourceFile(path, host.read(path).toString(), ts.ScriptTarget.Latest);
+            if (sourceFile.isDeclarationFile) {
+                return;
+            }
             var effectsPerClass = sourceFile.statements
                 .filter(ts.isClassDeclaration)
                 .map(function (clas) {
@@ -38,23 +45,23 @@ function migrateToCreators() {
                 });
             });
             var effects = effectsPerClass.reduce(function (acc, effects) { return acc.concat(effects); }, []);
-            var createEffectsChanges = replaceEffectDecorators(tree, sourceFile, effects);
-            var importChanges = schematics_core_1.replaceImport(sourceFile, sourceFile.fileName, '@ngrx/effects', 'Effect', 'createEffect');
-            schematics_core_1.commitChanges(tree, sourceFile.fileName, __spread(importChanges, createEffectsChanges));
+            var createEffectsChanges = replaceEffectDecorators(host, path, effects);
+            var importChanges = schematics_core_1.replaceImport(sourceFile, path, '@ngrx/effects', 'Effect', 'createEffect');
+            return schematics_core_1.commitChanges(host, sourceFile.fileName, __spread(importChanges, createEffectsChanges));
         });
     };
 }
 exports.migrateToCreators = migrateToCreators;
-function replaceEffectDecorators(host, sourceFile, effects) {
+function replaceEffectDecorators(host, path, effects) {
     var inserts = effects
         .filter(function (effect) { return !!effect.initializer; })
         .map(function (effect) {
         var decorator = (effect.decorators || []).find(isEffectDecorator);
-        var effectArguments = getDispatchProperties(host, sourceFile.text, decorator);
+        var effectArguments = getDispatchProperties(host, path, decorator);
         var end = effectArguments ? ", " + effectArguments + ")" : ')';
         return [
-            new schematics_core_1.InsertChange(sourceFile.fileName, effect.initializer.pos, ' createEffect(() =>'),
-            new schematics_core_1.InsertChange(sourceFile.fileName, effect.initializer.end, end),
+            new schematics_core_1.InsertChange(path, effect.initializer.pos, ' createEffect(() =>'),
+            new schematics_core_1.InsertChange(path, effect.initializer.end, end),
         ];
     })
         .reduce(function (acc, inserts) { return acc.concat(inserts); }, []);
@@ -64,7 +71,7 @@ function replaceEffectDecorators(host, sourceFile, effects) {
         .map(function (decorators) {
         var effectDecorators = decorators.filter(isEffectDecorator);
         return effectDecorators.map(function (decorator) {
-            return new schematics_core_1.RemoveChange(sourceFile.fileName, decorator.expression.pos - 1, // also get the @ sign
+            return new schematics_core_1.RemoveChange(path, decorator.expression.pos - 1, // also get the @ sign
             decorator.expression.end);
         });
     })
@@ -76,12 +83,13 @@ function isEffectDecorator(decorator) {
         ts.isIdentifier(decorator.expression.expression) &&
         decorator.expression.expression.text === 'Effect');
 }
-function getDispatchProperties(host, fileContent, decorator) {
+function getDispatchProperties(host, path, decorator) {
     if (!decorator.expression || !ts.isCallExpression(decorator.expression)) {
         return '';
     }
     // just copy the effect properties
-    var args = fileContent
+    var content = host.read(path).toString('utf8');
+    var args = content
         .substring(decorator.expression.arguments.pos, decorator.expression.arguments.end)
         .trim();
     return args;
