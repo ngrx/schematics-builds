@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../../../modules/schematics/schematics-core/testing/index.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,sDAAoC;AACpC,oDAAkC;AAClC,qDAAmC","sourcesContent":["export * from './create-app-module';\r\nexport * from './create-reducers';\r\nexport * from './create-workspace';\r\n"]}
