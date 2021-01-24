@@ -1,1 +1,1 @@
-{"version":3,"file":"schema.js","sourceRoot":"","sources":["../../../../../modules/schematics/src/ng-add/schema.ts"],"names":[],"mappings":"","sourcesContent":["export interface Schema {\r\n  defaultCollection?: boolean;\r\n}\r\n"]}
+{"version":3,"file":"schema.js","sourceRoot":"","sources":["../../../../../modules/schematics/src/ng-add/schema.ts"],"names":[],"mappings":"","sourcesContent":["export interface Schema {\n  defaultCollection?: boolean;\n}\n"]}
