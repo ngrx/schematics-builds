@@ -1,0 +1,1 @@
+{"version":3,"file":"test-setup.js","sourceRoot":"","sources":["../../../../modules/schematics/schematics-core/test-setup.ts"],"names":[],"mappings":";;AAAA,+BAA6B","sourcesContent":["import 'jest-preset-angular';\n"]}
