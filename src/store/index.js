@@ -26,9 +26,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -101,7 +102,7 @@ function addImportToNgModule(options) {
                 storeDevtoolsNgModuleImport,
             ]);
         }
-        var changes = __spread(commonImports, rootImports);
+        var changes = __spreadArray(__spreadArray([], __read(commonImports)), __read(rootImports));
         var recorder = host.beginUpdate(modulePath);
         try {
             for (var changes_1 = __values(changes), changes_1_1 = changes_1.next(); !changes_1_1.done; changes_1_1 = changes_1.next()) {

@@ -15,9 +15,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 exports.__esModule = true;
 exports.migrateToCreators = void 0;
@@ -40,7 +41,7 @@ function migrateToCreators() {
             var effects = effectsPerClass.reduce(function (acc, effects) { return acc.concat(effects); }, []);
             var createEffectsChanges = replaceEffectDecorators(tree, sourceFile, effects);
             var importChanges = schematics_core_1.replaceImport(sourceFile, sourceFile.fileName, '@ngrx/effects', 'Effect', 'createEffect');
-            schematics_core_1.commitChanges(tree, sourceFile.fileName, __spread(importChanges, createEffectsChanges));
+            schematics_core_1.commitChanges(tree, sourceFile.fileName, __spreadArray(__spreadArray([], __read(importChanges)), __read(createEffectsChanges)));
         });
     };
 }
@@ -69,7 +70,7 @@ function replaceEffectDecorators(host, sourceFile, effects) {
         });
     })
         .reduce(function (acc, removes) { return acc.concat(removes); }, []);
-    return __spread(inserts, removes);
+    return __spreadArray(__spreadArray([], __read(inserts)), __read(removes));
 }
 function isEffectDecorator(decorator) {
     return (ts.isCallExpression(decorator.expression) &&

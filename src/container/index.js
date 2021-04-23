@@ -108,7 +108,7 @@ function default_1(options) {
         var parsedPath = schematics_core_1.parseName(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        var opts = ['state', 'stateInterface'].reduce(function (current, key) {
+        var opts = ['state', 'stateInterface', 'testDepth'].reduce(function (current, key) {
             return schematics_core_1.omit(current, key);
         }, options);
         var templateSource = schematics_1.apply(schematics_1.url(options.testDepth === 'unit' ? './files' : './integration-files'), [
