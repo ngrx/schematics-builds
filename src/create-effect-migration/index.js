@@ -50,7 +50,13 @@ function replaceEffectDecorators(host, sourceFile, effects) {
     var inserts = effects
         .filter(function (effect) { return !!effect.initializer; })
         .map(function (effect) {
+        if (!effect.initializer) {
+            return [];
+        }
         var decorator = (effect.decorators || []).find(isEffectDecorator);
+        if (!decorator) {
+            return [];
+        }
         var effectArguments = getDispatchProperties(host, sourceFile.text, decorator);
         var end = effectArguments ? ", " + effectArguments + ")" : ')';
         return [
@@ -61,8 +67,10 @@ function replaceEffectDecorators(host, sourceFile, effects) {
         .reduce(function (acc, inserts) { return acc.concat(inserts); }, []);
     var removes = effects
         .map(function (effect) { return effect.decorators; })
-        .filter(function (decorators) { return decorators; })
         .map(function (decorators) {
+        if (!decorators) {
+            return [];
+        }
         var effectDecorators = decorators.filter(isEffectDecorator);
         return effectDecorators.map(function (decorator) {
             return new schematics_core_1.RemoveChange(sourceFile.fileName, decorator.expression.pos - 1, // also get the @ sign

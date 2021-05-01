@@ -21,7 +21,9 @@ function migrateToNgrxPush() {
             var changes = [];
             while ((match = ASYNC_REGEXP.exec(template.content)) !== null) {
                 var m = match.toString();
-                changes.push(new schematics_core_1.ReplaceChange(template.fileName, template.start + match.index, m, m.replace('async', 'ngrxPush')));
+                changes.push(new schematics_core_1.ReplaceChange(template.fileName, 
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                template.start + match.index, m, m.replace('async', 'ngrxPush')));
             }
             return schematics_core_1.commitChanges(host, template.fileName, changes);
         });
