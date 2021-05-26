@@ -12,10 +12,14 @@ var __assign = (this && this.__assign) || function () {
 };
 exports.__esModule = true;
 var schematics_1 = require("@angular-devkit/schematics");
-var schematics_core_1 = require("@ngrx/schematics/schematics-core");
+var schematics_core_1 = require("../../schematics-core");
+var strings_1 = require("../../schematics-core/utility/strings");
 function default_1(options) {
     return function (host, context) {
         options.path = schematics_core_1.getProjectPath(host, options);
+        options.prefix = options.creators
+            ? strings_1.camelize(options.prefix || 'load')
+            : strings_1.capitalize(options.prefix || 'load');
         var parsedPath = schematics_core_1.parseName(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
