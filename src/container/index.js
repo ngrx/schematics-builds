@@ -40,7 +40,7 @@ var __values = (this && this.__values) || function(o) {
 exports.__esModule = true;
 var schematics_1 = require("@angular-devkit/schematics");
 var ts = require("typescript");
-var schematics_core_1 = require("@ngrx/schematics/schematics-core");
+var schematics_core_1 = require("../../schematics-core");
 function addStateToComponent(options) {
     return function (host) {
         var e_1, _a;

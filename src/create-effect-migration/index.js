@@ -24,7 +24,7 @@ exports.__esModule = true;
 exports.migrateToCreators = void 0;
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
-var schematics_core_1 = require("@ngrx/schematics/schematics-core");
+var schematics_core_1 = require("../../schematics-core");
 function migrateToCreators() {
     return function (tree) {
         schematics_core_1.visitTSSourceFiles(tree, function (sourceFile) {

@@ -3,7 +3,7 @@ exports.__esModule = true;
 exports.exportReactiveComponentModule = exports.importReactiveComponentModule = exports.migrateToNgrxPush = void 0;
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
-var schematics_core_1 = require("@ngrx/schematics/schematics-core");
+var schematics_core_1 = require("../../schematics-core");
 var ASYNC_REGEXP = /\| {0,}async/g;
 var REACTIVE_MODULE = 'ReactiveComponentModule';
 var COMPONENT_MODULE = '@ngrx/component';

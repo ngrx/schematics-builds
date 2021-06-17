@@ -12,7 +12,7 @@ var __assign = (this && this.__assign) || function () {
 };
 exports.__esModule = true;
 var schematics_1 = require("@angular-devkit/schematics");
-var schematics_core_1 = require("@ngrx/schematics/schematics-core");
+var schematics_core_1 = require("../../schematics-core");
 function default_1(options) {
     return function (host, context) {
         var projectConfig = schematics_core_1.getProject(host, options);

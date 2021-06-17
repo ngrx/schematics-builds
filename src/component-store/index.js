@@ -41,7 +41,7 @@ exports.__esModule = true;
 exports.addComponentStoreProviderToComponent = exports.addComponentStoreProviderToNgModule = void 0;
 var schematics_1 = require("@angular-devkit/schematics");
 var ts = require("typescript");
-var schematics_core_1 = require("@ngrx/schematics/schematics-core");
+var schematics_core_1 = require("../../schematics-core");
 function createProvidingContext(options, providingPath) {
     var componentStoreName = "" + schematics_core_1.stringUtils.classify(options.name + "Store");
     var componentStorePath = "/" + options.path + "/" +
