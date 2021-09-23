@@ -17,6 +17,7 @@ function default_1(options) {
     return function (host, context) {
         var projectConfig = schematics_core_1.getProject(host, options);
         options.path = schematics_core_1.getProjectPath(host, options);
+        options.prefix = schematics_core_1.getPrefix(options);
         if (options.module) {
             options.module = schematics_core_1.findModuleFromOptions(host, options);
         }

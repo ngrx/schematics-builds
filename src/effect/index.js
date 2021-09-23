@@ -95,12 +95,14 @@ function addImportToNgModule(options) {
 function getEffectMethod(creators) {
     return creators ? 'createEffect' : 'Effect';
 }
-function getEffectStart(name, creators) {
+function getEffectStart(name, effectPrefix, creators) {
     var effectName = schematics_core_1.stringUtils.classify(name);
+    var effectMethodPrefix = schematics_core_1.stringUtils.camelize(effectPrefix);
     return creators
-        ? "load" + effectName + "s$ = createEffect(() => {" +
+        ? "" + effectMethodPrefix + effectName + "s$ = createEffect(() => {" +
             '\n    return this.actions$.pipe( \n'
-        : '@Effect()\n' + ("  load" + effectName + "s$ = this.actions$.pipe(");
+        : '@Effect()\n' +
+            ("  " + effectMethodPrefix + effectName + "s$ = this.actions$.pipe(");
 }
 function getEffectEnd(creators) {
     return creators ? '  );\n' + '  });' : ');';
@@ -108,6 +110,7 @@ function getEffectEnd(creators) {
 function default_1(options) {
     return function (host, context) {
         options.path = schematics_core_1.getProjectPath(host, options);
+        options.prefix = schematics_core_1.getPrefix(options);
         if (options.module) {
             options.module = schematics_core_1.findModuleFromOptions(host, options);
         }
@@ -121,7 +124,7 @@ function default_1(options) {
             options.root && options.minimal ? schematics_1.filter(function (_) { return false; }) : schematics_1.noop(),
             schematics_1.applyTemplates(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
                     return schematics_core_1.stringUtils.group(options.flat ? '' : s, options.group ? 'effects' : '');
-                }, effectMethod: getEffectMethod(options.creators), effectStart: getEffectStart(options.name, options.creators), effectEnd: getEffectEnd(options.creators) }), options)),
+                }, effectMethod: getEffectMethod(options.creators), effectStart: getEffectStart(options.name, options.prefix, options.creators), effectEnd: getEffectEnd(options.creators) }), options)),
             schematics_1.move(parsedPath.path),
         ]);
         return schematics_1.chain([

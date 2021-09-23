@@ -12,7 +12,8 @@ function default_1(options) {
                 project: options.project,
                 skipTests: options.skipTests,
                 api: options.api,
-                creators: options.creators
+                creators: options.creators,
+                prefix: options.prefix
             }),
             schematics_1.schematic('reducer', {
                 flat: options.flat,
@@ -25,7 +26,8 @@ function default_1(options) {
                 reducers: options.reducers,
                 feature: true,
                 api: options.api,
-                creators: options.creators
+                creators: options.creators,
+                prefix: options.prefix
             }),
             schematics_1.schematic('effect', {
                 flat: options.flat,
@@ -37,7 +39,8 @@ function default_1(options) {
                 skipTests: options.skipTests,
                 feature: true,
                 api: options.api,
-                creators: options.creators
+                creators: options.creators,
+                prefix: options.prefix
             }),
             schematics_1.schematic('selector', {
                 flat: options.flat,
