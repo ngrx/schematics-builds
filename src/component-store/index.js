@@ -48,7 +48,7 @@ function createProvidingContext(options, providingPath) {
         (options.flat ? '' : schematics_core_1.stringUtils.dasherize(options.name) + '/') +
         schematics_core_1.stringUtils.dasherize(options.name) +
         '.store';
-    var componentStoreRelativePath = schematics_core_1.buildRelativePath(providingPath, componentStorePath);
+    var componentStoreRelativePath = (0, schematics_core_1.buildRelativePath)(providingPath, componentStorePath);
     return {
         componentStoreRelativePath: componentStoreRelativePath,
         componentStoreName: componentStoreName
@@ -74,8 +74,8 @@ function addComponentStoreProviderToNgModule(options) {
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
         var context = createProvidingContext(options, options.module);
-        var componentStore = schematics_core_1.insertImport(source, modulePath, context.componentStoreName, context.componentStoreRelativePath);
-        var _b = __read(schematics_core_1.addProviderToModule(source, modulePath, context.componentStoreName, context.componentStoreRelativePath), 1), storeNgModuleProvider = _b[0];
+        var componentStore = (0, schematics_core_1.insertImport)(source, modulePath, context.componentStoreName, context.componentStoreRelativePath);
+        var _b = __read((0, schematics_core_1.addProviderToModule)(source, modulePath, context.componentStoreName, context.componentStoreRelativePath), 1), storeNgModuleProvider = _b[0];
         var changes = [componentStore, storeNgModuleProvider];
         var recorder = host.beginUpdate(modulePath);
         try {
@@ -118,8 +118,8 @@ function addComponentStoreProviderToComponent(options) {
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(componentPath, sourceText, ts.ScriptTarget.Latest, true);
         var context = createProvidingContext(options, options.component);
-        var componentStore = schematics_core_1.insertImport(source, componentPath, context.componentStoreName, context.componentStoreRelativePath);
-        var _b = __read(schematics_core_1.addProviderToComponent(source, componentPath, context.componentStoreName, context.componentStoreRelativePath), 1), storeNgModuleProvider = _b[0];
+        var componentStore = (0, schematics_core_1.insertImport)(source, componentPath, context.componentStoreName, context.componentStoreRelativePath);
+        var _b = __read((0, schematics_core_1.addProviderToComponent)(source, componentPath, context.componentStoreName, context.componentStoreRelativePath), 1), storeNgModuleProvider = _b[0];
         var changes = [componentStore, storeNgModuleProvider];
         var recorder = host.beginUpdate(componentPath);
         try {
@@ -144,28 +144,28 @@ function addComponentStoreProviderToComponent(options) {
 exports.addComponentStoreProviderToComponent = addComponentStoreProviderToComponent;
 function default_1(options) {
     return function (host, context) {
-        options.path = schematics_core_1.getProjectPath(host, options);
+        options.path = (0, schematics_core_1.getProjectPath)(host, options);
         if (options.module) {
-            options.module = schematics_core_1.findModuleFromOptions(host, options);
+            options.module = (0, schematics_core_1.findModuleFromOptions)(host, options);
         }
         if (options.component) {
-            options.component = schematics_core_1.findComponentFromOptions(host, options);
+            options.component = (0, schematics_core_1.findComponentFromOptions)(host, options);
         }
-        var parsedPath = schematics_core_1.parseName(options.path, options.name);
+        var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        var templateSource = schematics_1.apply(schematics_1.url('./files'), [
+        var templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
             options.skipTests
-                ? schematics_1.filter(function (path) { return !path.endsWith('.spec.ts.template'); })
-                : schematics_1.noop(),
-            schematics_1.applyTemplates(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) { return (options.flat ? '' : s); } }), options)),
-            schematics_1.move(parsedPath.path),
+                ? (0, schematics_1.filter)(function (path) { return !path.endsWith('.spec.ts.template'); })
+                : (0, schematics_1.noop)(),
+            (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) { return (options.flat ? '' : s); } }), options)),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
-        return schematics_1.chain([
-            schematics_1.branchAndMerge(schematics_1.chain([
+        return (0, schematics_1.chain)([
+            (0, schematics_1.branchAndMerge)((0, schematics_1.chain)([
                 addComponentStoreProviderToNgModule(options),
                 addComponentStoreProviderToComponent(options),
-                schematics_1.mergeWith(templateSource),
+                (0, schematics_1.mergeWith)(templateSource),
             ])),
         ])(host, context);
     };

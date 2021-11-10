@@ -15,33 +15,32 @@ var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 function default_1(options) {
     return function (host, context) {
-        var projectConfig = schematics_core_1.getProject(host, options);
-        options.path = schematics_core_1.getProjectPath(host, options);
-        options.prefix = schematics_core_1.getPrefix(options);
+        var projectConfig = (0, schematics_core_1.getProject)(host, options);
+        options.path = (0, schematics_core_1.getProjectPath)(host, options);
+        options.prefix = (0, schematics_core_1.getPrefix)(options);
         if (options.module) {
-            options.module = schematics_core_1.findModuleFromOptions(host, options);
+            options.module = (0, schematics_core_1.findModuleFromOptions)(host, options);
         }
-        var parsedPath = schematics_core_1.parseName(options.path, options.name);
+        var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
         var templateOptions = __assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
                 return schematics_core_1.stringUtils.group(options.flat ? '' : s, options.group ? 'reducers' : '');
-            }, isIvyEnabled: schematics_core_1.isIvyEnabled(host, 'tsconfig.json') &&
-                schematics_core_1.isIvyEnabled(host, projectConfig.root + "/tsconfig.app.json") }), options);
-        var commonTemplate = schematics_1.apply(schematics_1.url('./common-files'), [
+            } }), options);
+        var commonTemplate = (0, schematics_1.apply)((0, schematics_1.url)('./common-files'), [
             options.skipTests
-                ? schematics_1.filter(function (path) { return !path.endsWith('.spec.ts.template'); })
-                : schematics_1.noop(),
-            schematics_1.applyTemplates(templateOptions),
-            schematics_1.move(parsedPath.path),
+                ? (0, schematics_1.filter)(function (path) { return !path.endsWith('.spec.ts.template'); })
+                : (0, schematics_1.noop)(),
+            (0, schematics_1.applyTemplates)(templateOptions),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
-        var templateSource = schematics_1.apply(schematics_1.url(options.creators ? './creator-files' : './files'), [schematics_1.applyTemplates(templateOptions), schematics_1.move(parsedPath.path)]);
-        return schematics_1.chain([
-            schematics_1.branchAndMerge(schematics_1.chain([schematics_core_1.addReducerToState(options)])),
-            schematics_1.branchAndMerge(schematics_1.chain([
-                schematics_core_1.addReducerImportToNgModule(options),
-                schematics_1.mergeWith(commonTemplate),
-                schematics_1.mergeWith(templateSource),
+        var templateSource = (0, schematics_1.apply)((0, schematics_1.url)(options.creators ? './creator-files' : './files'), [(0, schematics_1.applyTemplates)(templateOptions), (0, schematics_1.move)(parsedPath.path)]);
+        return (0, schematics_1.chain)([
+            (0, schematics_1.branchAndMerge)((0, schematics_1.chain)([(0, schematics_core_1.addReducerToState)(options)])),
+            (0, schematics_1.branchAndMerge)((0, schematics_1.chain)([
+                (0, schematics_core_1.addReducerImportToNgModule)(options),
+                (0, schematics_1.mergeWith)(commonTemplate),
+                (0, schematics_1.mergeWith)(templateSource),
             ])),
         ])(host, context);
     };

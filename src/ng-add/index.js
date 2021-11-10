@@ -14,8 +14,8 @@ exports.__esModule = true;
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 function updateWorkspaceCli(host, value) {
-    var workspace = schematics_core_1.getWorkspace(host);
-    var path = schematics_core_1.getWorkspacePath(host);
+    var workspace = (0, schematics_core_1.getWorkspace)(host);
+    var path = (0, schematics_core_1.getWorkspacePath)(host);
     workspace['cli'] = __assign(__assign({}, workspace['cli']), value);
     host.overwrite(path, JSON.stringify(workspace, null, 2));
 }
@@ -30,8 +30,8 @@ function setAsDefaultSchematics() {
 }
 function default_1(options) {
     return function (host, context) {
-        return schematics_1.chain([
-            options && options.defaultCollection ? setAsDefaultSchematics() : schematics_1.noop(),
+        return (0, schematics_1.chain)([
+            options && options.defaultCollection ? setAsDefaultSchematics() : (0, schematics_1.noop)(),
         ])(host, context);
     };
 }

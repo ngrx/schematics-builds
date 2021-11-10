@@ -63,10 +63,10 @@ function addStateToComponent(options) {
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(componentPath, sourceText, ts.ScriptTarget.Latest, true);
-        var stateImportPath = schematics_core_1.buildRelativePath(componentPath, statePath);
-        var storeImport = schematics_core_1.insertImport(source, componentPath, 'Store', '@ngrx/store');
+        var stateImportPath = (0, schematics_core_1.buildRelativePath)(componentPath, statePath);
+        var storeImport = (0, schematics_core_1.insertImport)(source, componentPath, 'Store', '@ngrx/store');
         var stateImport = options.state
-            ? schematics_core_1.insertImport(source, componentPath, "* as fromStore", stateImportPath, true)
+            ? (0, schematics_core_1.insertImport)(source, componentPath, "* as fromStore", stateImportPath, true)
             : new schematics_core_1.NoopChange();
         var componentClass = source.statements.find(function (stm) { return stm.kind === ts.SyntaxKind.ClassDeclaration; });
         var component = componentClass;
@@ -104,28 +104,28 @@ function addStateToComponent(options) {
 }
 function default_1(options) {
     return function (host, context) {
-        options.path = schematics_core_1.getProjectPath(host, options);
-        var parsedPath = schematics_core_1.parseName(options.path, options.name);
+        options.path = (0, schematics_core_1.getProjectPath)(host, options);
+        var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
         var opts = ['state', 'stateInterface', 'testDepth'].reduce(function (current, key) {
-            return schematics_core_1.omit(current, key);
+            return (0, schematics_core_1.omit)(current, key);
         }, options);
-        var templateSource = schematics_1.apply(schematics_1.url(options.testDepth === 'unit' ? './files' : './integration-files'), [
+        var templateSource = (0, schematics_1.apply)((0, schematics_1.url)(options.testDepth === 'unit' ? './files' : './integration-files'), [
             options.skipTests
-                ? schematics_1.filter(function (path) { return !path.endsWith('.spec.ts.template'); })
-                : schematics_1.noop(),
-            schematics_1.applyTemplates(__assign(__assign({ 'if-flat': function (s) { return (options.flat ? '' : s); } }, schematics_core_1.stringUtils), options)),
-            schematics_1.move(parsedPath.path),
+                ? (0, schematics_1.filter)(function (path) { return !path.endsWith('.spec.ts.template'); })
+                : (0, schematics_1.noop)(),
+            (0, schematics_1.applyTemplates)(__assign(__assign({ 'if-flat': function (s) { return (options.flat ? '' : s); } }, schematics_core_1.stringUtils), options)),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
         // Remove all undefined values to use the schematic defaults (in angular.json or the Angular schema)
         Object.keys(opts).forEach(function (key) {
             return opts[key] === undefined ? delete opts[key] : {};
         });
-        return schematics_1.chain([
-            schematics_1.externalSchematic('@schematics/angular', 'component', __assign(__assign({}, opts), { skipTests: true })),
+        return (0, schematics_1.chain)([
+            (0, schematics_1.externalSchematic)('@schematics/angular', 'component', __assign(__assign({}, opts), { skipTests: true })),
             addStateToComponent(options),
-            schematics_1.mergeWith(templateSource),
+            (0, schematics_1.mergeWith)(templateSource),
         ])(host, context);
     };
 }

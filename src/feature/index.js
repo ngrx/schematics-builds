@@ -3,8 +3,8 @@ exports.__esModule = true;
 var schematics_1 = require("@angular-devkit/schematics");
 function default_1(options) {
     return function (host, context) {
-        return schematics_1.chain([
-            schematics_1.schematic('action', {
+        return (0, schematics_1.chain)([
+            (0, schematics_1.schematic)('action', {
                 flat: options.flat,
                 group: options.group,
                 name: options.name,
@@ -15,7 +15,7 @@ function default_1(options) {
                 creators: options.creators,
                 prefix: options.prefix
             }),
-            schematics_1.schematic('reducer', {
+            (0, schematics_1.schematic)('reducer', {
                 flat: options.flat,
                 group: options.group,
                 module: options.module,
@@ -29,7 +29,7 @@ function default_1(options) {
                 creators: options.creators,
                 prefix: options.prefix
             }),
-            schematics_1.schematic('effect', {
+            (0, schematics_1.schematic)('effect', {
                 flat: options.flat,
                 group: options.group,
                 module: options.module,
@@ -42,7 +42,7 @@ function default_1(options) {
                 creators: options.creators,
                 prefix: options.prefix
             }),
-            schematics_1.schematic('selector', {
+            (0, schematics_1.schematic)('selector', {
                 flat: options.flat,
                 group: options.group,
                 name: options.name,

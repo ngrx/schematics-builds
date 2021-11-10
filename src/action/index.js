@@ -15,21 +15,21 @@ var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 function default_1(options) {
     return function (host, context) {
-        options.path = schematics_core_1.getProjectPath(host, options);
-        options.prefix = schematics_core_1.getPrefix(options);
-        var parsedPath = schematics_core_1.parseName(options.path, options.name);
+        options.path = (0, schematics_core_1.getProjectPath)(host, options);
+        options.prefix = (0, schematics_core_1.getPrefix)(options);
+        var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        var templateSource = schematics_1.apply(schematics_1.url(options.creators ? './creator-files' : './files'), [
+        var templateSource = (0, schematics_1.apply)((0, schematics_1.url)(options.creators ? './creator-files' : './files'), [
             options.skipTests
-                ? schematics_1.filter(function (path) { return !path.endsWith('.spec.ts.template'); })
-                : schematics_1.noop(),
-            schematics_1.applyTemplates(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
+                ? (0, schematics_1.filter)(function (path) { return !path.endsWith('.spec.ts.template'); })
+                : (0, schematics_1.noop)(),
+            (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
                     return schematics_core_1.stringUtils.group(options.flat ? '' : s, options.group ? 'actions' : '');
                 } }), options)),
-            schematics_1.move(parsedPath.path),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
-        return schematics_1.chain([schematics_1.branchAndMerge(schematics_1.chain([schematics_1.mergeWith(templateSource)]))])(host, context);
+        return (0, schematics_1.chain)([(0, schematics_1.branchAndMerge)((0, schematics_1.chain)([(0, schematics_1.mergeWith)(templateSource)]))])(host, context);
     };
 }
 exports["default"] = default_1;

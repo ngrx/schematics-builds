@@ -58,16 +58,16 @@ function addImportToNgModule(options) {
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
         var effectsName = "" + schematics_core_1.stringUtils.classify(options.name + "Effects");
-        var effectsModuleImport = schematics_core_1.insertImport(source, modulePath, 'EffectsModule', '@ngrx/effects');
+        var effectsModuleImport = (0, schematics_core_1.insertImport)(source, modulePath, 'EffectsModule', '@ngrx/effects');
         var effectsPath = "/" + options.path + "/" +
             (options.flat ? '' : schematics_core_1.stringUtils.dasherize(options.name) + '/') +
             (options.group ? 'effects/' : '') +
             schematics_core_1.stringUtils.dasherize(options.name) +
             '.effects';
-        var relativePath = schematics_core_1.buildRelativePath(modulePath, effectsPath);
-        var effectsImport = schematics_core_1.insertImport(source, modulePath, effectsName, relativePath);
+        var relativePath = (0, schematics_core_1.buildRelativePath)(modulePath, effectsPath);
+        var effectsImport = (0, schematics_core_1.insertImport)(source, modulePath, effectsName, relativePath);
         var effectsSetup = options.root && options.minimal ? "[]" : "[" + effectsName + "]";
-        var _b = __read(schematics_core_1.addImportToModule(source, modulePath, "EffectsModule.for" + (options.root ? 'Root' : 'Feature') + "(" + effectsSetup + ")", relativePath), 1), effectsNgModuleImport = _b[0];
+        var _b = __read((0, schematics_core_1.addImportToModule)(source, modulePath, "EffectsModule.for" + (options.root ? 'Root' : 'Feature') + "(" + effectsSetup + ")", relativePath), 1), effectsNgModuleImport = _b[0];
         var changes = [effectsModuleImport, effectsNgModuleImport];
         if (!options.root || (options.root && !options.minimal)) {
             changes = changes.concat([effectsImport]);
@@ -109,26 +109,26 @@ function getEffectEnd(creators) {
 }
 function default_1(options) {
     return function (host, context) {
-        options.path = schematics_core_1.getProjectPath(host, options);
-        options.prefix = schematics_core_1.getPrefix(options);
+        options.path = (0, schematics_core_1.getProjectPath)(host, options);
+        options.prefix = (0, schematics_core_1.getPrefix)(options);
         if (options.module) {
-            options.module = schematics_core_1.findModuleFromOptions(host, options);
+            options.module = (0, schematics_core_1.findModuleFromOptions)(host, options);
         }
-        var parsedPath = schematics_core_1.parseName(options.path, options.name || '');
+        var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name || '');
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        var templateSource = schematics_1.apply(schematics_1.url('./files'), [
+        var templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
             options.skipTests
-                ? schematics_1.filter(function (path) { return !path.endsWith('.spec.ts.template'); })
-                : schematics_1.noop(),
-            options.root && options.minimal ? schematics_1.filter(function (_) { return false; }) : schematics_1.noop(),
-            schematics_1.applyTemplates(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
+                ? (0, schematics_1.filter)(function (path) { return !path.endsWith('.spec.ts.template'); })
+                : (0, schematics_1.noop)(),
+            options.root && options.minimal ? (0, schematics_1.filter)(function (_) { return false; }) : (0, schematics_1.noop)(),
+            (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
                     return schematics_core_1.stringUtils.group(options.flat ? '' : s, options.group ? 'effects' : '');
                 }, effectMethod: getEffectMethod(options.creators), effectStart: getEffectStart(options.name, options.prefix, options.creators), effectEnd: getEffectEnd(options.creators) }), options)),
-            schematics_1.move(parsedPath.path),
+            (0, schematics_1.move)(parsedPath.path),
         ]);
-        return schematics_1.chain([
-            schematics_1.branchAndMerge(schematics_1.chain([addImportToNgModule(options), schematics_1.mergeWith(templateSource)])),
+        return (0, schematics_1.chain)([
+            (0, schematics_1.branchAndMerge)((0, schematics_1.chain)([addImportToNgModule(options), (0, schematics_1.mergeWith)(templateSource)])),
         ])(host, context);
     };
 }
