@@ -15,6 +15,7 @@ function getWorkspace(host) {
         throw new schematics_1.SchematicsException("Could not find (" + path + ")");
     }
     var config = configBuffer.toString();
+    console.log(config);
     return JSON.parse(config);
 }
 exports.getWorkspace = getWorkspace;
