@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var schematics_1 = require("@angular-devkit/schematics");
 function default_1(options) {
     return function (host, context) {
@@ -12,8 +12,7 @@ function default_1(options) {
                 project: options.project,
                 skipTests: options.skipTests,
                 api: options.api,
-                creators: options.creators,
-                prefix: options.prefix
+                prefix: options.prefix,
             }),
             (0, schematics_1.schematic)('reducer', {
                 flat: options.flat,
@@ -26,8 +25,7 @@ function default_1(options) {
                 reducers: options.reducers,
                 feature: true,
                 api: options.api,
-                creators: options.creators,
-                prefix: options.prefix
+                prefix: options.prefix,
             }),
             (0, schematics_1.schematic)('effect', {
                 flat: options.flat,
@@ -39,8 +37,7 @@ function default_1(options) {
                 skipTests: options.skipTests,
                 feature: true,
                 api: options.api,
-                creators: options.creators,
-                prefix: options.prefix
+                prefix: options.prefix,
             }),
             (0, schematics_1.schematic)('selector', {
                 flat: options.flat,
@@ -49,10 +46,10 @@ function default_1(options) {
                 path: options.path,
                 project: options.project,
                 skipTests: options.skipTests,
-                feature: true
+                feature: true,
             }),
         ])(host, context);
     };
 }
-exports["default"] = default_1;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map

@@ -8,7 +8,10 @@
       "type": "string",
       "format": "path",
       "description": "The path to create the component.",
-      "visible": false
+      "visible": false,
+      "$default": {
+        "$source": "workingDirectory"
+      }
     },
     "project": {
       "type": "string",
@@ -96,6 +99,15 @@
       "enum": ["unit", "integration"],
       "type": "string",
       "default": "integration"
+    },
+    "standalone": {
+      "description": "Whether the generated component is standalone.",
+      "type": "boolean"
+    },
+    "displayBlock": {
+      "description": "Specifies if the style will contain :host { display: block; }.",
+      "type": "boolean",
+      "alias": "b"
     }
   },
   "required": []

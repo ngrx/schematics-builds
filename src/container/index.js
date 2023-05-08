@@ -10,22 +10,6 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -37,7 +21,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var schematics_1 = require("@angular-devkit/schematics");
 var ts = require("typescript");
 var schematics_core_1 = require("../../schematics-core");
@@ -47,19 +31,19 @@ function addStateToComponent(options) {
         if (!options.state && !options.stateInterface) {
             return host;
         }
-        var statePath = "/" + options.path + "/" + options.state;
+        var statePath = "/".concat(options.path, "/").concat(options.state);
         if (options.state) {
             if (!host.exists(statePath)) {
-                throw new Error("The Specified state path " + statePath + " does not exist");
+                throw new Error("The Specified state path ".concat(statePath, " does not exist"));
             }
         }
-        var componentPath = "/" + options.path + "/" +
+        var componentPath = "/".concat(options.path, "/") +
             (options.flat ? '' : schematics_core_1.stringUtils.dasherize(options.name) + '/') +
             schematics_core_1.stringUtils.dasherize(options.name) +
             '.component.ts';
         var text = host.read(componentPath);
         if (text === null) {
-            throw new schematics_1.SchematicsException("File " + componentPath + " does not exist.");
+            throw new schematics_1.SchematicsException("File ".concat(componentPath, " does not exist."));
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(componentPath, sourceText, ts.ScriptTarget.Latest, true);
@@ -69,14 +53,7 @@ function addStateToComponent(options) {
             ? (0, schematics_core_1.insertImport)(source, componentPath, "* as fromStore", stateImportPath, true)
             : new schematics_core_1.NoopChange();
         var componentClass = source.statements.find(function (stm) { return stm.kind === ts.SyntaxKind.ClassDeclaration; });
-        var component = componentClass;
-        var componentConstructor = component.members.find(function (member) { return member.kind === ts.SyntaxKind.Constructor; });
-        var cmpCtr = componentConstructor;
-        var pos = cmpCtr.pos;
-        var constructorText = cmpCtr.getText();
-        var _b = __read(constructorText.split('()'), 2), start = _b[0], end = _b[1];
-        var storeConstructor = [start, "(private store: Store)", end].join('');
-        var constructorUpdate = new schematics_core_1.ReplaceChange(componentPath, pos, "  " + constructorText + "\n\n", "\n\n  " + storeConstructor);
+        var constructorUpdate = new schematics_core_1.ReplaceChange(componentPath, componentClass.members.pos, '\n', "\n  constructor(private store: Store) {}");
         var changes = [storeImport, stateImport, constructorUpdate];
         var recorder = host.beginUpdate(componentPath);
         try {
@@ -86,7 +63,7 @@ function addStateToComponent(options) {
                     recorder.insertLeft(change.pos, change.toAdd);
                 }
                 else if (change instanceof schematics_core_1.ReplaceChange) {
-                    recorder.remove(pos, change.oldText.length);
+                    recorder.remove(change.pos, change.oldText.length);
                     recorder.insertLeft(change.order, change.newText);
                 }
             }
@@ -94,7 +71,7 @@ function addStateToComponent(options) {
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (changes_1_1 && !changes_1_1.done && (_a = changes_1["return"])) _a.call(changes_1);
+                if (changes_1_1 && !changes_1_1.done && (_a = changes_1.return)) _a.call(changes_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -129,5 +106,5 @@ function default_1(options) {
         ])(host, context);
     };
 }
-exports["default"] = default_1;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map

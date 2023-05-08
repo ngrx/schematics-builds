@@ -1,4 +1,4 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 require("jest-preset-angular/setup-jest");
 //# sourceMappingURL=test-setup.js.map

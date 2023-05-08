@@ -17,7 +17,10 @@
       "type": "string",
       "format": "path",
       "description": "The path to create the component.",
-      "visible": false
+      "visible": false,
+      "$default": {
+        "$source": "workingDirectory"
+      }
     },
     "project": {
       "type": "string",
@@ -64,13 +67,6 @@
       "description": "Specifies if effect has api success and failure actions wired up",
       "aliases": ["a"],
       "x-prompt": "Should we wire up success and failure actions?"
-    },
-    "creators": {
-      "type": "boolean",
-      "default": true,
-      "description": "Specifies whether to use creator functions for handling actions, reducers, and effects.",
-      "aliases": ["c"],
-      "x-prompt": "Do you want to use the create function?"
     },
     "minimal": {
       "type": "boolean",

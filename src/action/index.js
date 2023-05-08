@@ -10,7 +10,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 function default_1(options) {
@@ -20,10 +20,7 @@ function default_1(options) {
         var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        var templateSource = (0, schematics_1.apply)((0, schematics_1.url)(options.creators ? './creator-files' : './files'), [
-            options.skipTests
-                ? (0, schematics_1.filter)(function (path) { return !path.endsWith('.spec.ts.template'); })
-                : (0, schematics_1.noop)(),
+        var templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
             (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
                     return schematics_core_1.stringUtils.group(options.flat ? '' : s, options.group ? 'actions' : '');
                 } }), options)),
@@ -32,5 +29,5 @@ function default_1(options) {
         return (0, schematics_1.chain)([(0, schematics_1.branchAndMerge)((0, schematics_1.chain)([(0, schematics_1.mergeWith)(templateSource)]))])(host, context);
     };
 }
-exports["default"] = default_1;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map

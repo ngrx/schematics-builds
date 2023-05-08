@@ -10,7 +10,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 function default_1(options) {
@@ -25,13 +25,13 @@ function default_1(options) {
                 : (0, schematics_1.noop)(),
             (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
                     return schematics_core_1.stringUtils.group(options.flat ? '' : s, options.group ? 'selectors' : '');
-                }, reducerPath: "" + relativePath(options) + schematics_core_1.stringUtils.dasherize(options.name) + ".reducer" }), options)),
+                }, reducerPath: "".concat(relativePath(options)).concat(schematics_core_1.stringUtils.dasherize(options.name), ".reducer") }), options)),
             (0, schematics_1.move)(parsedPath.path),
         ]);
         return (0, schematics_1.chain)([(0, schematics_1.branchAndMerge)((0, schematics_1.chain)([(0, schematics_1.mergeWith)(templateSource)]))])(host, context);
     };
 }
-exports["default"] = default_1;
+exports.default = default_1;
 function relativePath(options) {
     if (options.feature) {
         return schematics_core_1.stringUtils.featurePath(options.group, options.flat, 'reducers', schematics_core_1.stringUtils.dasherize(options.name));

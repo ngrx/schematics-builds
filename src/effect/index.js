@@ -37,7 +37,7 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
@@ -49,25 +49,25 @@ function addImportToNgModule(options) {
             return host;
         }
         if (!host.exists(modulePath)) {
-            throw new Error("Specified module path " + modulePath + " does not exist");
+            throw new Error("Specified module path ".concat(modulePath, " does not exist"));
         }
         var text = host.read(modulePath);
         if (text === null) {
-            throw new schematics_1.SchematicsException("File " + modulePath + " does not exist.");
+            throw new schematics_1.SchematicsException("File ".concat(modulePath, " does not exist."));
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
-        var effectsName = "" + schematics_core_1.stringUtils.classify(options.name + "Effects");
+        var effectsName = "".concat(schematics_core_1.stringUtils.classify("".concat(options.name, "Effects")));
         var effectsModuleImport = (0, schematics_core_1.insertImport)(source, modulePath, 'EffectsModule', '@ngrx/effects');
-        var effectsPath = "/" + options.path + "/" +
+        var effectsPath = "/".concat(options.path, "/") +
             (options.flat ? '' : schematics_core_1.stringUtils.dasherize(options.name) + '/') +
             (options.group ? 'effects/' : '') +
             schematics_core_1.stringUtils.dasherize(options.name) +
             '.effects';
         var relativePath = (0, schematics_core_1.buildRelativePath)(modulePath, effectsPath);
         var effectsImport = (0, schematics_core_1.insertImport)(source, modulePath, effectsName, relativePath);
-        var effectsSetup = options.root && options.minimal ? "[]" : "[" + effectsName + "]";
-        var _b = __read((0, schematics_core_1.addImportToModule)(source, modulePath, "EffectsModule.for" + (options.root ? 'Root' : 'Feature') + "(" + effectsSetup + ")", relativePath), 1), effectsNgModuleImport = _b[0];
+        var effectsSetup = options.root && options.minimal ? "[]" : "[".concat(effectsName, "]");
+        var _b = __read((0, schematics_core_1.addImportToModule)(source, modulePath, "EffectsModule.for".concat(options.root ? 'Root' : 'Feature', "(").concat(effectsSetup, ")"), relativePath), 1), effectsNgModuleImport = _b[0];
         var changes = [effectsModuleImport, effectsNgModuleImport];
         if (!options.root || (options.root && !options.minimal)) {
             changes = changes.concat([effectsImport]);
@@ -84,7 +84,7 @@ function addImportToNgModule(options) {
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (changes_1_1 && !changes_1_1.done && (_a = changes_1["return"])) _a.call(changes_1);
+                if (changes_1_1 && !changes_1_1.done && (_a = changes_1.return)) _a.call(changes_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -92,20 +92,11 @@ function addImportToNgModule(options) {
         return host;
     };
 }
-function getEffectMethod(creators) {
-    return creators ? 'createEffect' : 'Effect';
-}
-function getEffectStart(name, effectPrefix, creators) {
+function getEffectStart(name, effectPrefix) {
     var effectName = schematics_core_1.stringUtils.classify(name);
     var effectMethodPrefix = schematics_core_1.stringUtils.camelize(effectPrefix);
-    return creators
-        ? "" + effectMethodPrefix + effectName + "s$ = createEffect(() => {" +
-            '\n    return this.actions$.pipe( \n'
-        : '@Effect()\n' +
-            ("  " + effectMethodPrefix + effectName + "s$ = this.actions$.pipe(");
-}
-function getEffectEnd(creators) {
-    return creators ? '  );\n' + '  });' : ');';
+    return ("".concat(effectMethodPrefix).concat(effectName, "s$ = createEffect(() => {") +
+        '\n    return this.actions$.pipe(\n');
 }
 function default_1(options) {
     return function (host, context) {
@@ -124,7 +115,7 @@ function default_1(options) {
             options.root && options.minimal ? (0, schematics_1.filter)(function (_) { return false; }) : (0, schematics_1.noop)(),
             (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
                     return schematics_core_1.stringUtils.group(options.flat ? '' : s, options.group ? 'effects' : '');
-                }, effectMethod: getEffectMethod(options.creators), effectStart: getEffectStart(options.name, options.prefix, options.creators), effectEnd: getEffectEnd(options.creators) }), options)),
+                }, effectMethod: 'createEffect', effectStart: getEffectStart(options.name, options.prefix), effectEnd: '  );\n' + '  });' }), options)),
             (0, schematics_1.move)(parsedPath.path),
         ]);
         return (0, schematics_1.chain)([
@@ -132,5 +123,5 @@ function default_1(options) {
         ])(host, context);
     };
 }
-exports["default"] = default_1;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map

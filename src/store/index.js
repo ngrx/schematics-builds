@@ -46,9 +46,8 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var schematics_1 = require("@angular-devkit/schematics");
-var core_1 = require("@angular-devkit/core");
 var ts = require("typescript");
 var schematics_core_1 = require("../../schematics-core");
 function addImportToNgModule(options) {
@@ -59,22 +58,21 @@ function addImportToNgModule(options) {
             return host;
         }
         if (!host.exists(modulePath)) {
-            throw new Error("Specified module path " + modulePath + " does not exist");
+            throw new Error("Specified module path ".concat(modulePath, " does not exist"));
         }
         var text = host.read(modulePath);
         if (text === null) {
-            throw new schematics_1.SchematicsException("File " + modulePath + " does not exist.");
+            throw new schematics_1.SchematicsException("File ".concat(modulePath, " does not exist."));
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
-        var statePath = options.path + "/" + options.statePath;
+        var statePath = "".concat(options.path, "/").concat(options.statePath);
         var relativePath = (0, schematics_core_1.buildRelativePath)(modulePath, statePath);
-        var environmentsPath = (0, schematics_core_1.buildRelativePath)(statePath, options.path + "/environments/environment");
         var rootStoreReducers = options.minimal ? "{}" : "reducers";
         var rootStoreConfig = options.minimal ? "" : ", { metaReducers }";
         var storeNgModuleImport = (0, schematics_core_1.addImportToModule)(source, modulePath, options.root
-            ? "StoreModule.forRoot(" + rootStoreReducers + rootStoreConfig + ")"
-            : "StoreModule.forFeature(from" + schematics_core_1.stringUtils.classify(options.name) + "." + schematics_core_1.stringUtils.camelize(options.name) + "FeatureKey, from" + schematics_core_1.stringUtils.classify(options.name) + ".reducers, { metaReducers: from" + schematics_core_1.stringUtils.classify(options.name) + ".metaReducers })", relativePath).shift();
+            ? "StoreModule.forRoot(".concat(rootStoreReducers).concat(rootStoreConfig, ")")
+            : "StoreModule.forFeature(from".concat(schematics_core_1.stringUtils.classify(options.name), ".").concat(schematics_core_1.stringUtils.camelize(options.name), "FeatureKey, from").concat(schematics_core_1.stringUtils.classify(options.name), ".reducers, { metaReducers: from").concat(schematics_core_1.stringUtils.classify(options.name), ".metaReducers })"), relativePath).shift();
         var commonImports = [
             (0, schematics_core_1.insertImport)(source, modulePath, 'StoreModule', '@ngrx/store'),
             storeNgModuleImport,
@@ -86,7 +84,7 @@ function addImportToNgModule(options) {
         }
         else if (!options.root) {
             commonImports = commonImports.concat([
-                (0, schematics_core_1.insertImport)(source, modulePath, "* as from" + schematics_core_1.stringUtils.classify(options.name), relativePath, true),
+                (0, schematics_core_1.insertImport)(source, modulePath, "* as from".concat(schematics_core_1.stringUtils.classify(options.name)), relativePath, true),
             ]);
         }
         var rootImports = [];
@@ -99,10 +97,10 @@ function addImportToNgModule(options) {
             // because at this time the store import hasn't been committed yet, `addImportToModule` wont add a comma
             // so we have to add it here for empty import arrays
             var adjectiveComma = hasImports_1 ? '' : ', ';
-            var storeDevtoolsNgModuleImport = (0, schematics_core_1.addImportToModule)(source, modulePath, adjectiveComma + "!environment.production ? StoreDevtoolsModule.instrument() : []", relativePath).shift();
+            var storeDevtoolsNgModuleImport = (0, schematics_core_1.addImportToModule)(source, modulePath, "".concat(adjectiveComma, "isDevMode() ? StoreDevtoolsModule.instrument() : []"), relativePath).shift();
             rootImports = rootImports.concat([
                 (0, schematics_core_1.insertImport)(source, modulePath, 'StoreDevtoolsModule', '@ngrx/store-devtools'),
-                (0, schematics_core_1.insertImport)(source, modulePath, 'environment', environmentsPath),
+                (0, schematics_core_1.insertImport)(source, modulePath, 'isDevMode', '@angular/core'),
                 storeDevtoolsNgModuleImport,
             ]);
         }
@@ -119,7 +117,7 @@ function addImportToNgModule(options) {
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (changes_1_1 && !changes_1_1.done && (_a = changes_1["return"])) _a.call(changes_1);
+                if (changes_1_1 && !changes_1_1.done && (_a = changes_1.return)) _a.call(changes_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -136,9 +134,6 @@ function default_1(options) {
         var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name || '');
         options.name = parsedPath.name;
         options.path = parsedPath.path;
-        var statePath = "/" + options.path + "/" + options.statePath + "/index.ts";
-        var srcPath = (0, core_1.dirname)(options.path);
-        var environmentsPath = (0, schematics_core_1.buildRelativePath)(statePath, srcPath + "/environments/environment");
         if (options.module) {
             options.module = (0, schematics_core_1.findModuleFromOptions)(host, options);
         }
@@ -149,7 +144,7 @@ function default_1(options) {
         }
         var templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
             options.root && options.minimal ? (0, schematics_1.filter)(function (_) { return false; }) : (0, schematics_1.noop)(),
-            (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), options), { isLib: (0, schematics_core_1.isLib)(host, options), environmentsPath: environmentsPath })),
+            (0, schematics_1.applyTemplates)(__assign(__assign(__assign({}, schematics_core_1.stringUtils), options), { isLib: (0, schematics_core_1.isLib)(host, options) })),
             (0, schematics_1.move)(parsedPath.path),
         ]);
         return (0, schematics_1.chain)([
@@ -157,5 +152,5 @@ function default_1(options) {
         ])(host, context);
     };
 }
-exports["default"] = default_1;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map

@@ -17,7 +17,10 @@
       "type": "string",
       "format": "path",
       "description": "The path to create the component.",
-      "visible": false
+      "visible": false,
+      "$default": {
+        "$source": "workingDirectory"
+      }
     },
     "project": {
       "type": "string",
@@ -61,13 +64,6 @@
       "description": "Specifies if api success and failure actions should be added to the reducer",
       "aliases": ["a"],
       "x-prompt": "Should we add success and failure actions to the reducer?"
-    },
-    "creators": {
-      "type": "boolean",
-      "default": true,
-      "description": "Specifies whether to use creator functions for handling actions and reducers.",
-      "aliases": ["c"],
-      "x-prompt": "Do you want to use the create function?"
     }
   },
   "prefix": {

@@ -37,21 +37,21 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.addComponentStoreProviderToComponent = exports.addComponentStoreProviderToNgModule = void 0;
 var schematics_1 = require("@angular-devkit/schematics");
 var ts = require("typescript");
 var schematics_core_1 = require("../../schematics-core");
 function createProvidingContext(options, providingPath) {
-    var componentStoreName = "" + schematics_core_1.stringUtils.classify(options.name + "Store");
-    var componentStorePath = "/" + options.path + "/" +
+    var componentStoreName = "".concat(schematics_core_1.stringUtils.classify("".concat(options.name, "Store")));
+    var componentStorePath = "/".concat(options.path, "/") +
         (options.flat ? '' : schematics_core_1.stringUtils.dasherize(options.name) + '/') +
         schematics_core_1.stringUtils.dasherize(options.name) +
         '.store';
     var componentStoreRelativePath = (0, schematics_core_1.buildRelativePath)(providingPath, componentStorePath);
     return {
         componentStoreRelativePath: componentStoreRelativePath,
-        componentStoreName: componentStoreName
+        componentStoreName: componentStoreName,
     };
 }
 /**
@@ -65,11 +65,11 @@ function addComponentStoreProviderToNgModule(options) {
         }
         var modulePath = options.module;
         if (!host.exists(options.module)) {
-            throw new Error("Specified module path " + modulePath + " does not exist");
+            throw new Error("Specified module path ".concat(modulePath, " does not exist"));
         }
         var text = host.read(modulePath);
         if (text === null) {
-            throw new schematics_1.SchematicsException("File " + modulePath + " does not exist.");
+            throw new schematics_1.SchematicsException("File ".concat(modulePath, " does not exist."));
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
@@ -89,7 +89,7 @@ function addComponentStoreProviderToNgModule(options) {
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (changes_1_1 && !changes_1_1.done && (_a = changes_1["return"])) _a.call(changes_1);
+                if (changes_1_1 && !changes_1_1.done && (_a = changes_1.return)) _a.call(changes_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -109,11 +109,11 @@ function addComponentStoreProviderToComponent(options) {
         }
         var componentPath = options.component;
         if (!host.exists(options.component)) {
-            throw new Error("Specified component path " + componentPath + " does not exist");
+            throw new Error("Specified component path ".concat(componentPath, " does not exist"));
         }
         var text = host.read(componentPath);
         if (text === null) {
-            throw new schematics_1.SchematicsException("File " + componentPath + " does not exist.");
+            throw new schematics_1.SchematicsException("File ".concat(componentPath, " does not exist."));
         }
         var sourceText = text.toString('utf-8');
         var source = ts.createSourceFile(componentPath, sourceText, ts.ScriptTarget.Latest, true);
@@ -133,7 +133,7 @@ function addComponentStoreProviderToComponent(options) {
         catch (e_2_1) { e_2 = { error: e_2_1 }; }
         finally {
             try {
-                if (changes_2_1 && !changes_2_1.done && (_a = changes_2["return"])) _a.call(changes_2);
+                if (changes_2_1 && !changes_2_1.done && (_a = changes_2.return)) _a.call(changes_2);
             }
             finally { if (e_2) throw e_2.error; }
         }
@@ -170,5 +170,5 @@ function default_1(options) {
         ])(host, context);
     };
 }
-exports["default"] = default_1;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map

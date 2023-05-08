@@ -1,14 +1,14 @@
 "use strict";
-exports.__esModule = true;
-exports.exportReactiveComponentModule = exports.importReactiveComponentModule = exports.migrateToNgrxPush = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.exportPushModule = exports.importPushModule = exports.migrateToNgrxPush = void 0;
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 var ASYNC_REGEXP = /\| {0,}async/g;
-var REACTIVE_MODULE = 'ReactiveComponentModule';
+var PUSH_MODULE = 'PushModule';
 var COMPONENT_MODULE = '@ngrx/component';
-var reactiveModuleToFind = function (node) {
-    return ts.isIdentifier(node) && node.text === REACTIVE_MODULE;
+var pushModuleToFind = function (node) {
+    return ts.isIdentifier(node) && node.text === PUSH_MODULE;
 };
 var ngModulesToFind = function (node) {
     return ts.isIdentifier(node) &&
@@ -30,46 +30,42 @@ function migrateToNgrxPush() {
     };
 }
 exports.migrateToNgrxPush = migrateToNgrxPush;
-function importReactiveComponentModule() {
+function importPushModule() {
     return function (host) {
         (0, schematics_core_1.visitTSSourceFiles)(host, function (sourceFile) {
             var hasCommonModuleOrBrowserModule = false;
-            var hasReactiveComponentModule = false;
+            var hasPushModule = false;
             (0, schematics_core_1.visitNgModuleImports)(sourceFile, function (_, importNodes) {
                 hasCommonModuleOrBrowserModule = importNodes.some(ngModulesToFind);
-                hasReactiveComponentModule = importNodes.some(reactiveModuleToFind);
+                hasPushModule = importNodes.some(pushModuleToFind);
             });
-            if (hasCommonModuleOrBrowserModule && !hasReactiveComponentModule) {
-                var changes = (0, schematics_core_1.addImportToModule)(sourceFile, sourceFile.fileName, REACTIVE_MODULE, COMPONENT_MODULE);
+            if (hasCommonModuleOrBrowserModule && !hasPushModule) {
+                var changes = (0, schematics_core_1.addImportToModule)(sourceFile, sourceFile.fileName, PUSH_MODULE, COMPONENT_MODULE);
                 (0, schematics_core_1.commitChanges)(host, sourceFile.fileName, changes);
             }
         });
     };
 }
-exports.importReactiveComponentModule = importReactiveComponentModule;
-function exportReactiveComponentModule() {
+exports.importPushModule = importPushModule;
+function exportPushModule() {
     return function (host) {
         (0, schematics_core_1.visitTSSourceFiles)(host, function (sourceFile) {
             var hasCommonModuleOrBrowserModule = false;
-            var hasReactiveComponentModule = false;
+            var hasPushModule = false;
             (0, schematics_core_1.visitNgModuleExports)(sourceFile, function (_, exportNodes) {
                 hasCommonModuleOrBrowserModule = exportNodes.some(ngModulesToFind);
-                hasReactiveComponentModule = exportNodes.some(reactiveModuleToFind);
+                hasPushModule = exportNodes.some(pushModuleToFind);
             });
-            if (hasCommonModuleOrBrowserModule && !hasReactiveComponentModule) {
-                var changes = (0, schematics_core_1.addExportToModule)(sourceFile, sourceFile.fileName, REACTIVE_MODULE, COMPONENT_MODULE);
+            if (hasCommonModuleOrBrowserModule && !hasPushModule) {
+                var changes = (0, schematics_core_1.addExportToModule)(sourceFile, sourceFile.fileName, PUSH_MODULE, COMPONENT_MODULE);
                 (0, schematics_core_1.commitChanges)(host, sourceFile.fileName, changes);
             }
         });
     };
 }
-exports.exportReactiveComponentModule = exportReactiveComponentModule;
+exports.exportPushModule = exportPushModule;
 function default_1() {
-    return (0, schematics_1.chain)([
-        migrateToNgrxPush(),
-        importReactiveComponentModule(),
-        exportReactiveComponentModule(),
-    ]);
+    return (0, schematics_1.chain)([migrateToNgrxPush(), importPushModule(), exportPushModule()]);
 }
-exports["default"] = default_1;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map
