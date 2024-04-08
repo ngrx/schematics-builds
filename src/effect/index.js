@@ -101,13 +101,13 @@ function getEffectStart(name, effectPrefix) {
 function default_1(options) {
     return function (host, context) {
         options.path = (0, schematics_core_1.getProjectPath)(host, options);
+        var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name || '');
+        options.name = parsedPath.name;
+        options.path = parsedPath.path;
         options.prefix = (0, schematics_core_1.getPrefix)(options);
         if (options.module) {
             options.module = (0, schematics_core_1.findModuleFromOptions)(host, options);
         }
-        var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name || '');
-        options.name = parsedPath.name;
-        options.path = parsedPath.path;
         var templateSource = (0, schematics_1.apply)((0, schematics_1.url)('./files'), [
             options.skipTests
                 ? (0, schematics_1.filter)(function (path) { return !path.endsWith('.spec.ts.template'); })

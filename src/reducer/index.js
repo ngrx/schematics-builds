@@ -18,12 +18,12 @@ function default_1(options) {
         var projectConfig = (0, schematics_core_1.getProject)(host, options);
         options.path = (0, schematics_core_1.getProjectPath)(host, options);
         options.prefix = (0, schematics_core_1.getPrefix)(options);
-        if (options.module) {
-            options.module = (0, schematics_core_1.findModuleFromOptions)(host, options);
-        }
         var parsedPath = (0, schematics_core_1.parseName)(options.path, options.name);
         options.name = parsedPath.name;
         options.path = parsedPath.path;
+        if (options.module) {
+            options.module = (0, schematics_core_1.findModuleFromOptions)(host, options);
+        }
         var templateOptions = __assign(__assign(__assign({}, schematics_core_1.stringUtils), { 'if-flat': function (s) {
                 return schematics_core_1.stringUtils.group(options.flat ? '' : s, options.group ? 'reducers' : '');
             } }), options);
