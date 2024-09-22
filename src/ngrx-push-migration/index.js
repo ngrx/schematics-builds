@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.exportPushModule = exports.importPushModule = exports.migrateToNgrxPush = void 0;
+exports.migrateToNgrxPush = migrateToNgrxPush;
+exports.importPushModule = importPushModule;
+exports.exportPushModule = exportPushModule;
+exports.default = default_1;
 var ts = require("typescript");
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
@@ -29,7 +32,6 @@ function migrateToNgrxPush() {
         });
     };
 }
-exports.migrateToNgrxPush = migrateToNgrxPush;
 function importPushModule() {
     return function (host) {
         (0, schematics_core_1.visitTSSourceFiles)(host, function (sourceFile) {
@@ -46,7 +48,6 @@ function importPushModule() {
         });
     };
 }
-exports.importPushModule = importPushModule;
 function exportPushModule() {
     return function (host) {
         (0, schematics_core_1.visitTSSourceFiles)(host, function (sourceFile) {
@@ -63,9 +64,7 @@ function exportPushModule() {
         });
     };
 }
-exports.exportPushModule = exportPushModule;
 function default_1() {
     return (0, schematics_1.chain)([migrateToNgrxPush(), importPushModule(), exportPushModule()]);
 }
-exports.default = default_1;
 //# sourceMappingURL=index.js.map

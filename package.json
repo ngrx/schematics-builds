@@ -42,5 +42,6 @@
     "migrations": "./migrations/migration.json"
   },
   "main": "./src/index.js",
-  "type": "commonjs"
+  "type": "commonjs",
+  "types": "./src/index.d.ts"
 }

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = default_1;
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 function updateSchematicCollections(host) {
@@ -25,5 +26,4 @@ function default_1() {
         return (0, schematics_1.chain)([updateWorkspaceCli()])(host, context);
     };
 }
-exports.default = default_1;
 //# sourceMappingURL=index.js.map

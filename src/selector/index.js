@@ -11,6 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = default_1;
 var schematics_1 = require("@angular-devkit/schematics");
 var schematics_core_1 = require("../../schematics-core");
 function default_1(options) {
@@ -31,7 +32,6 @@ function default_1(options) {
         return (0, schematics_1.chain)([(0, schematics_1.branchAndMerge)((0, schematics_1.chain)([(0, schematics_1.mergeWith)(templateSource)]))])(host, context);
     };
 }
-exports.default = default_1;
 function relativePath(options) {
     if (options.feature) {
         return schematics_core_1.stringUtils.featurePath(options.group, options.flat, 'reducers', schematics_core_1.stringUtils.dasherize(options.name));

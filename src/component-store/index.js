@@ -38,7 +38,9 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addComponentStoreProviderToComponent = exports.addComponentStoreProviderToNgModule = void 0;
+exports.addComponentStoreProviderToNgModule = addComponentStoreProviderToNgModule;
+exports.addComponentStoreProviderToComponent = addComponentStoreProviderToComponent;
+exports.default = default_1;
 var schematics_1 = require("@angular-devkit/schematics");
 var ts = require("typescript");
 var schematics_core_1 = require("../../schematics-core");
@@ -97,7 +99,6 @@ function addComponentStoreProviderToNgModule(options) {
         return host;
     };
 }
-exports.addComponentStoreProviderToNgModule = addComponentStoreProviderToNgModule;
 /**
  * Add component store to Component
  */
@@ -141,7 +142,6 @@ function addComponentStoreProviderToComponent(options) {
         return host;
     };
 }
-exports.addComponentStoreProviderToComponent = addComponentStoreProviderToComponent;
 function default_1(options) {
     return function (host, context) {
         options.path = (0, schematics_core_1.getProjectPath)(host, options);
@@ -170,5 +170,4 @@ function default_1(options) {
         ])(host, context);
     };
 }
-exports.default = default_1;
 //# sourceMappingURL=index.js.map

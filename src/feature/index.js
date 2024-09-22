@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = default_1;
 var schematics_1 = require("@angular-devkit/schematics");
 function default_1(options) {
     return function (host, context) {
@@ -66,5 +67,4 @@ function default_1(options) {
         ]))(host, context);
     };
 }
-exports.default = default_1;
 //# sourceMappingURL=index.js.map
